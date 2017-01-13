@@ -1,21 +1,40 @@
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { addPlayer } from './actions/hanabiActions'
+import Game from './components/Game'
 
 class App extends Component {
+  constructor(props){
+    super(props);
+  }
+  
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        {console.log(this.props.game)}
+        <Game
+          addPlayer={this.props.actions.addPlayer}
+          />
       </div>
     );
   }
 }
 
-export default App;
+function mapStateToProps(state){
+  return {game: state.game}
+}
+
+function mapDispatchToProps(dispatch){
+  return {actions: bindActionCreators({ addPlayer }, dispatch)};
+}
+
+const connector = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
+const connectedComponent = connector(App)
+
+export default connectedComponent;
