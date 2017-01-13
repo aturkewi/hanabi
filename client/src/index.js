@@ -4,11 +4,11 @@ import { Provider } from 'react-redux';
 import App from './App';
 import configureStore from './store/configureStore';
 
-// import { resetGame, startGame } from './actions/gameActions';
+import { resetGame } from './actions/hanabiActions';
 
 const store = configureStore();
 
-// store.dispatch(resetGame());
+store.dispatch(resetGame());
 
 ReactDOM.render(
   <Provider store={store}>
