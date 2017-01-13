@@ -16,8 +16,3 @@ export default function hanabiReducer(state={}, action) {
       return state;
   }
 }
-
-const getRandCard = (deck) =>{
-  let randNum = Math.floor(Math.random()*deck.length);
-  return deck.splice(randNum,1)[0]
-}
