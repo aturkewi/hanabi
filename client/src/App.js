@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { addPlayer } from './actions/hanabiActions'
+import { addPlayer, startGame } from './actions/hanabiActions'
 import Game from './components/Game'
 
 class App extends Component {
@@ -14,9 +14,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {console.log(this.props.game)}
         <Game
+          startGame = {this.props.actions.startGame}
           addPlayer={this.props.actions.addPlayer}
+          game = {this.props.game}
           />
       </div>
     );
@@ -28,7 +29,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-  return {actions: bindActionCreators({ addPlayer }, dispatch)};
+  return {actions: bindActionCreators({ addPlayer, startGame }, dispatch)};
 }
 
 const connector = connect(

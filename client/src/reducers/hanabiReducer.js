@@ -12,12 +12,13 @@ export default function hanabiReducer(state={}, action) {
         missesRemaining: 3
       }
     case "ADD_PLAYER":
-      console.log(action)
-      console.log(state)
       const newPlayer = { name: action.playerName, hand:[] }
       return Object.assign({}, state, {
         players: [...state.players, newPlayer]
       })
+    case "START_GAME":
+      const { players, deck } = action
+      return Object.assign({}, state, { players, deck })
     default:
       return state;
   }
