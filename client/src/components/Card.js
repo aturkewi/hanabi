@@ -29,7 +29,7 @@ class Card extends Component{
       </div>)
     }
     return (  
-      <div key={this.props.i} onClick={this.handleClick}>
+      <div key={this.props.index} onClick={this.handleClick}>
         {`${this.props.card.color} ${this.props.card.number}`}
         {buttons}
       </div>
