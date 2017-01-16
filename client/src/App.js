@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 import './App.css';
 import './simple-grid.css'
-import { addPlayer, startGame } from './actions/hanabiActions'
+import { addPlayer, startGame, discardCard } from './actions/hanabiActions'
 import Game from './components/Game'
 
 const App = props => {
@@ -13,6 +13,7 @@ const App = props => {
         <Game
           startGame={props.actions.startGame}
           addPlayer={props.actions.addPlayer}
+          discardCard={props.actions.discardCard}
           game={props.game}
           />
       </div>
@@ -25,7 +26,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-  return {actions: bindActionCreators({ addPlayer, startGame }, dispatch)};
+  return {actions: bindActionCreators({ addPlayer, startGame, discardCard }, dispatch)};
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

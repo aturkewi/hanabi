@@ -28,3 +28,10 @@ export function startGame(originalPlayers, originalDeck){
   });
   return {type: "START_GAME", players, deck}
 }
+
+export function discardCard(oPlayer, discCard){
+  console.log("Hit")
+  const hand = oPlayer.hand.filter(c => c.id !== discCard.id);
+  const player = Object.assign({}, oPlayer, { hand })
+  return {type: "DISCARD_CARD", player, discCard}
+}

@@ -12,7 +12,6 @@ class Card extends Component{
   }
   
   handleClick(){
-    console.log(this.state)
     this.setState({hideOptions: !this.state.hideOptions})
   }
   
@@ -20,7 +19,11 @@ class Card extends Component{
     let buttons = null;
     if(this.props.currentPlayer){
       buttons = ( <div>
-        <button hidden={this.state.hideOptions}>Discard</button>
+        <button 
+          hidden={this.state.hideOptions}
+          onClick={this.props.handleDiscard.bind(null, this.props.card)}>
+          Discard
+        </button>
         <button hidden={this.state.hideOptions}>Play</button>
       </div>)
     }else{
@@ -30,7 +33,7 @@ class Card extends Component{
     }
     return (  
       <div key={this.props.index} onClick={this.handleClick}>
-        {`${this.props.card.color} ${this.props.card.number}`}
+        <span className="font-light">{`${this.props.card.color} ${this.props.card.number}`}</span>
         {buttons}
       </div>
     )

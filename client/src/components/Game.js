@@ -12,7 +12,7 @@ export default (props) => {
         {(players.length > 1) ? <button onClick={props.startGame.bind(null, players, deck)}>Start Game</button> : ''}
       </div>
       <div className="row">      
-        {players.map((p, i) => <Player key={i} player={p} currentPlayer={currentPlayer === p.id}/>)}
+        {players.map((p, i) => <Player key={i} player={p} currentPlayer={currentPlayer === p.id} discardCard={props.discardCard}/>)}
       </div>
     </div>
   )

@@ -18,7 +18,12 @@ export default (state={}, action) => {
         players: [...state.players, newPlayer]
       })
     case "START_GAME":
-      const { players, deck } = action
+      let { players, deck } = action
+      return Object.assign({}, state, { players, deck })
+    case "DISCARD_CARD":
+      deck = state.deck.filter(c => c !== action.discCard)
+      players = state.players.slice()
+      players[action.player.id] = action.player
       return Object.assign({}, state, { players, deck })
     default:
       return state;
