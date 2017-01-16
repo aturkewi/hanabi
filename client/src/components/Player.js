@@ -5,7 +5,6 @@ const Player = props => {
   return (
     <div>
       <h3>{props.player.name}</h3>
-      {console.log(props.player)}
       <ul>
         {props.player.hand.map((c, i)=> <Card card={c} index={i} currentPlayer={props.currentPlayer}/>)}
       </ul>
