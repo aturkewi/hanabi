@@ -35,3 +35,9 @@ export function discardCard(oPlayer, discCard){
   const player = Object.assign({}, oPlayer, { hand })
   return {type: "DISCARD_CARD", player, discCard}
 }
+
+export function increaseClue(currentClues){
+  let clueCounter = currentClues
+  if (clueCounter < 8){ clueCounter = currentClues + 1 }
+  return {type: "INCREASE_CLUE", clueCounter}
+}

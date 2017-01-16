@@ -8,7 +8,7 @@ export default (state={}, action) => {
         discard: [],
         played: [],
         players: [],
-        clueCounter: 8,
+        clueCounter: 6,
         missesRemaining: 3,
         currentPlayer: 0
       }
@@ -25,6 +25,11 @@ export default (state={}, action) => {
       players = state.players.slice()
       players[action.player.id] = action.player
       return Object.assign({}, state, { players, deck })
+    case "INCREASE_CLUE":
+      console.log(`Clues going up to ${action.clueCounter}`)
+      return Object.assign({}, state, { 
+        clueCounter: action.clueCounter
+      })
     default:
       return state;
   }

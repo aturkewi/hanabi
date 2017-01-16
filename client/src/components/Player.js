@@ -6,6 +6,7 @@ const Player = props => {
   const handleDiscard = (card, event) => {
     event.preventDefault();
     props.discardCard(props.player, card)
+    props.increaseClue(props.clueCounter)
   }
   return (
     <div className={props.currentPlayer ? "current-player col-2" : "col-2"}>
