@@ -6,22 +6,16 @@ import './App.css';
 import { addPlayer, startGame } from './actions/hanabiActions'
 import Game from './components/Game'
 
-class App extends Component {
-  constructor(props){
-    super(props);
-  }
-  
-  render() {
-    return (
-      <div className="App">
-        <Game
-          startGame = {this.props.actions.startGame}
-          addPlayer={this.props.actions.addPlayer}
-          game = {this.props.game}
-          />
-      </div>
-    );
-  }
+const App = props => {
+  return (
+    <div className="App">
+      <Game
+        startGame={props.actions.startGame}
+        addPlayer={props.actions.addPlayer}
+        game = {props.game}
+        />
+    </div>
+  );
 }
 
 function mapStateToProps(state){
@@ -32,10 +26,4 @@ function mapDispatchToProps(dispatch){
   return {actions: bindActionCreators({ addPlayer, startGame }, dispatch)};
 }
 
-const connector = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
-const connectedComponent = connector(App)
-
-export default connectedComponent;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
