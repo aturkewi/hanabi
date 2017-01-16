@@ -8,12 +8,12 @@ class Game extends Component {
     super(props);
   }
   render(){
-    const { players, deck } = this.props.game;
+    const { players, deck, currentPlayer } = this.props.game;
     return(
       <div>
         <AddPlayer addPlayer={this.props.addPlayer} />
         {(players.length > 1) ? <button onClick={this.props.startGame.bind(null, players, deck)}>Start Game</button> : ''}
-        {players.map((p, i) => <Player key={i} player={p}/>)}
+        {players.map((p, i) => <Player key={i} player={p} currentPlayer={currentPlayer === p.id}/>)}
       </div>
     )
   }

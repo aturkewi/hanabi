@@ -1,4 +1,5 @@
 import React from 'react';
+import Card from './Card';
 
 const Player = props => {
   return (
@@ -6,7 +7,7 @@ const Player = props => {
       <h3>{props.player.name}</h3>
       {console.log(props.player)}
       <ul>
-        {props.player.hand.map((c, i)=> `${c.color} ${c.number}`)}
+        {props.player.hand.map((c, i)=> <Card card={c} index={i} currentPlayer={props.currentPlayer}/>)}
       </ul>
     </div>
   )

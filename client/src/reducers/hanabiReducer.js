@@ -9,10 +9,11 @@ export default function hanabiReducer(state={}, action) {
         played: [],
         players: [],
         clueCounter: 8,
-        missesRemaining: 3
+        missesRemaining: 3,
+        currentPlayer: 0
       }
     case "ADD_PLAYER":
-      const newPlayer = { name: action.playerName, hand:[] }
+      const newPlayer = { name: action.playerName, hand:[], id: state.players.length }
       return Object.assign({}, state, {
         players: [...state.players, newPlayer]
       })
