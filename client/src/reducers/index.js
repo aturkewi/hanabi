@@ -1,8 +1,6 @@
 import { combineReducers } from 'redux';
-import hanabiReducer from './hanabiReducer';
+import game from './gameReducer';
 
-const rootReducer = combineReducers({
-  game: hanabiReducer
-})
+const rootReducer = combineReducers({ game })
 
 export default rootReducer;

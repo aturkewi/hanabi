@@ -1,6 +1,6 @@
 import { initialDeck } from '../lib/initialDeck';
 
-export default function hanabiReducer(state={}, action) {
+export default (state={}, action) => {
   switch(action.type){
     case "RESET_GAME":
       return {
