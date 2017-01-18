@@ -8,7 +8,7 @@ export default (state={}, action) => {
         discard: [],
         played: [],
         players: [],
-        clueCounter: 6,
+        clueCounter: 8,
         missesRemaining: 3,
         currentPlayer: 0
       }
