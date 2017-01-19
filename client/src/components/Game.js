@@ -5,6 +5,13 @@ import AddPlayer from './AddPlayer';
 
 export default (props) => {
   const { players, deck, currentPlayer } = props.game;
+  const handleDiscard = (card, event) => {
+    event.preventDefault();
+    // console.log(props)
+    props.discardCard(props.game.players[props.game.currentPlayer], card)
+    props.increaseClue(props.clueCounter)
+    // props.drawCard(props.deck, props.player)
+  }
   return(
     <div>
       <div className="row">
@@ -24,10 +31,8 @@ export default (props) => {
           return (
             <Player key={i} player={p} 
               currentPlayer={currentPlayer === p.id} 
-              discardCard={props.discardCard} 
-              increaseClue={props.increaseClue} 
               clueCounter={props.game.clueCounter}
-              deck={props.game.deck}
+              handleDiscard={handleDiscard}
             />
           )})
         }
