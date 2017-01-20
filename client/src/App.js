@@ -11,12 +11,6 @@ const App = props => {
     <div className="App">
       <div className="container">
         <Game
-          startGame={props.actions.startGame}
-          addPlayer={props.actions.addPlayer}
-          discardCard={props.actions.discardCard}
-          drawCard={props.actions.drawCard}
-          increaseClue={props.actions.increaseClue}
-          nextTurn={props.actions.nextTurn}
           actions={props.actions}
           game={props.game}
           />

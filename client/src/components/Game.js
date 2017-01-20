@@ -8,17 +8,13 @@ export default (props) => {
   const handleDiscard = (discardedCard, event) => {
     let currentPlayer = players[currentPlayerId]
     event.preventDefault();
-    props.discardCard(currentPlayer, discardedCard, clueCounter, deck, players)
-    // props.increaseClue(props.game.clueCounter)
-    // debugger;
-    // props.drawCard(props.deck, currentPlayer)
-    // props.nextTurn(props.game.players, props.game.currentPlayer)
+    props.actions.discardCard(currentPlayer, discardedCard, clueCounter, deck, players)
   }
   return(
     <div>
       <div className="row">
-        <AddPlayer addPlayer={props.addPlayer} />
-        {(players.length > 1) ? <button onClick={props.startGame.bind(null, players, deck)}>Start Game</button> : ''}
+        <AddPlayer addPlayer={props.actions.addPlayer} />
+        {(players.length > 1) ? <button onClick={props.actions.startGame.bind(null, players, deck)}>Start Game</button> : ''}
       </div>
       <div className="row">
         <div className="col-6">
