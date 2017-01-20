@@ -29,15 +29,28 @@ export function startGame(originalPlayers, originalDeck){
   return {type: "START_GAME", players, deck}
 }
 
-export function discardCard(oPlayer, discCard){
-  console.log("Hit")
-  const hand = oPlayer.hand.filter(c => c.id !== discCard.id);
-  const player = Object.assign({}, oPlayer, { hand })
-  return {type: "DISCARD_CARD", player, discCard}
+export function discardCard(originalPlayer, discardedCard){
+  console.log("HitDiscard")
+  const hand = originalPlayer.hand.filter(card => card.id !== discardedCard.id);
+  const player = Object.assign({}, originalPlayer, { hand })
+  return {type: "DISCARD_CARD", player, discardedCard}
 }
 
 export function increaseClue(currentClues){
   let clueCounter = currentClues
   if (clueCounter < 8){ clueCounter = currentClues + 1 }
   return {type: "INCREASE_CLUE", clueCounter}
+}
+
+export function drawCard(oDeck, oPlayer){
+  const deck = [...oDeck];
+  const hand = [...oPlayer.hand, getRandCard(deck)]
+  const player = Object.assign({}, oPlayer, { hand })
+  return {type:"DRAW_CARD", player, deck}
+}
+
+export function nextTurn(players, oCurrentPlayer){
+  let currentPlayer;
+  (oCurrentPlayer === players.length) ? currentPlayer = 0 : currentPlayer = oCurrentPlayer + 1 
+  return {type:"NEXT_TURN", currentPlayer}
 }
