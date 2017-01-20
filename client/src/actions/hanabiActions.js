@@ -32,12 +32,6 @@ const nextTurn = (players, originalCurrentPlayer) => {
   return currentPlayerId
 }
 
-// const moveCard = (originalFromPile, originalToPile=[], card) {
-//   const fromPile = originalFromPile.slice().filter(c => c.id !== card.id)
-//   const toPile = [...toPile, card]
-//   return {fromPile, toPile, card}
-// }
-
 export function resetGame(){
   return {type: "RESET_GAME"}
 }
@@ -74,16 +68,3 @@ export function discardCard(originalPlayer, discardedCard, currentClues, origina
   return {type: "DISCARD_CARD", deck, player, clueCounter, discardedCard, currentPlayerId}
   // return {type: "INCREASE_CLUE", clueCounter}
 }
-
-// export function drawCard(oDeck, oPlayer){
-//   const deck = [...oDeck];
-//   const hand = [...oPlayer.hand, getRandCard(deck)]
-//   const player = Object.assign({}, oPlayer, { hand })
-//   return {type:"DRAW_CARD", player, deck}
-// }
-
-// export function nextTurn(players, oCurrentPlayer){
-//   let currentPlayer;
-//   (oCurrentPlayer === players.length) ? currentPlayer = 0 : currentPlayer = oCurrentPlayer + 1 
-//   return {type:"NEXT_TURN", currentPlayer}
-// }
