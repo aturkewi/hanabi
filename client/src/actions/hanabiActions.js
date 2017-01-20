@@ -3,6 +3,41 @@ const getRandCard = (deck) =>{
   return deck.splice(randNum,1)[0]
 }
 
+const increaseClue = (currentClues) => {
+  let clueCounter = currentClues
+  if (clueCounter < 8){ clueCounter = currentClues + 1 }
+  return clueCounter
+}
+
+const removeFromHand = (originalPlayer, discardedCard) => {
+  const hand = originalPlayer.hand.filter(card => card.id !== discardedCard.id);
+  const player = Object.assign({}, originalPlayer, { hand })
+  return player
+}
+
+const  drawCard = (originalDeck, originalPlayer) => {
+  const deck = [...originalDeck];
+  const hand = [...originalPlayer.hand, getRandCard(deck)]
+  const player = Object.assign({}, originalPlayer, { hand })
+  return { deck, player }
+}
+
+const nextTurn = (players, originalCurrentPlayer) => {
+  let currentPlayerId;
+  if(originalCurrentPlayer === (players.length - 1)){
+    currentPlayerId = 0
+  }else{
+    currentPlayerId = originalCurrentPlayer + 1 
+  }
+  return currentPlayerId
+}
+
+// const moveCard = (originalFromPile, originalToPile=[], card) {
+//   const fromPile = originalFromPile.slice().filter(c => c.id !== card.id)
+//   const toPile = [...toPile, card]
+//   return {fromPile, toPile, card}
+// }
+
 export function resetGame(){
   return {type: "RESET_GAME"}
 }
@@ -29,28 +64,26 @@ export function startGame(originalPlayers, originalDeck){
   return {type: "START_GAME", players, deck}
 }
 
-export function discardCard(originalPlayer, discardedCard){
-  console.log("HitDiscard")
-  const hand = originalPlayer.hand.filter(card => card.id !== discardedCard.id);
-  const player = Object.assign({}, originalPlayer, { hand })
-  return {type: "DISCARD_CARD", player, discardedCard}
+export function discardCard(originalPlayer, discardedCard, currentClues, originalDeck, players) {
+  let player = removeFromHand(originalPlayer, discardedCard)
+  const clueCounter = increaseClue(currentClues)
+  let playerAndDeck = drawCard(originalDeck, player)
+  const deck = playerAndDeck.deck
+  player = playerAndDeck.player
+  const currentPlayerId = nextTurn(players, originalPlayer.id)
+  return {type: "DISCARD_CARD", deck, player, clueCounter, discardedCard, currentPlayerId}
+  // return {type: "INCREASE_CLUE", clueCounter}
 }
 
-export function increaseClue(currentClues){
-  let clueCounter = currentClues
-  if (clueCounter < 8){ clueCounter = currentClues + 1 }
-  return {type: "INCREASE_CLUE", clueCounter}
-}
+// export function drawCard(oDeck, oPlayer){
+//   const deck = [...oDeck];
+//   const hand = [...oPlayer.hand, getRandCard(deck)]
+//   const player = Object.assign({}, oPlayer, { hand })
+//   return {type:"DRAW_CARD", player, deck}
+// }
 
-export function drawCard(oDeck, oPlayer){
-  const deck = [...oDeck];
-  const hand = [...oPlayer.hand, getRandCard(deck)]
-  const player = Object.assign({}, oPlayer, { hand })
-  return {type:"DRAW_CARD", player, deck}
-}
-
-export function nextTurn(players, oCurrentPlayer){
-  let currentPlayer;
-  (oCurrentPlayer === players.length) ? currentPlayer = 0 : currentPlayer = oCurrentPlayer + 1 
-  return {type:"NEXT_TURN", currentPlayer}
-}
+// export function nextTurn(players, oCurrentPlayer){
+//   let currentPlayer;
+//   (oCurrentPlayer === players.length) ? currentPlayer = 0 : currentPlayer = oCurrentPlayer + 1 
+//   return {type:"NEXT_TURN", currentPlayer}
+// }

@@ -4,15 +4,15 @@ import Player from './Player';
 import AddPlayer from './AddPlayer';
 
 export default (props) => {
-  const { players, deck, currentPlayerId } = props.game;
-  const handleDiscard = (card, event) => {
+  const { players, deck, currentPlayerId, clueCounter } = props.game;
+  const handleDiscard = (discardedCard, event) => {
     let currentPlayer = players[currentPlayerId]
     event.preventDefault();
-    props.discardCard(currentPlayer, card)
-    props.increaseClue(props.game.clueCounter)
-    debugger;
-    props.drawCard(props.deck, currentPlayer)
-    props.nextTurn(props.game.players, props.game.currentPlayer)
+    props.discardCard(currentPlayer, discardedCard, clueCounter, deck, players)
+    // props.increaseClue(props.game.clueCounter)
+    // debugger;
+    // props.drawCard(props.deck, currentPlayer)
+    // props.nextTurn(props.game.players, props.game.currentPlayer)
   }
   return(
     <div>

@@ -17,6 +17,7 @@ const App = props => {
           drawCard={props.actions.drawCard}
           increaseClue={props.actions.increaseClue}
           nextTurn={props.actions.nextTurn}
+          actions={props.actions}
           game={props.game}
           />
       </div>

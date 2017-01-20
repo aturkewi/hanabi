@@ -21,12 +21,16 @@ export default (state={}, action) => {
       let { players, deck } = action
       return Object.assign({}, state, { players, deck })
     case "DISCARD_CARD":
-      deck = state.deck.filter(c => c !== action.discardedCard)
       const discard = [...state.discard, action.discardedCard]
-      debugger;
       players = state.players.slice()
       players[action.player.id] = action.player
-      return Object.assign({}, state, { players, deck, discard })
+      return Object.assign({}, state, { 
+        players, 
+        deck: action.deck,
+        discard,
+        clueCounter: action.clueCounter,
+        currentPlayerId: action.currentPlayerId
+      })
     case "INCREASE_CLUE":
       console.log("Increasing Clue")
       return Object.assign({}, state, { 
