@@ -10,7 +10,7 @@ export default (state={}, action) => {
         players: [],
         clueCounter: 8,
         missesRemaining: 3,
-        currentPlayer: 0
+        currentPlayerId: 0
       }
     case "ADD_PLAYER":
       const newPlayer = { name: action.playerName, hand:[], id: state.players.length }
