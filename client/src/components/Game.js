@@ -26,13 +26,13 @@ export default (props) => {
       </div>
       <div className="row">      
         {players.map((p, i) => {
-          return (
+          return (<div className="col-2" key={i}>
             <Player key={i} player={p} 
               currentPlayer={currentPlayerId === p.id} 
               clueCounter={props.game.clueCounter}
               handleDiscard={handleDiscard}
             />
-          )})
+          </div>)})
         }
       </div>
     </div>
