@@ -10,7 +10,10 @@ module.exports = {
       max: 10
     },
     migrations: {
-      tableName: 'migrations'
+      directory: __dirname + '/db/migrations',
+    },
+    seeds: {
+      directory: __dirname + '/db/seeds/test'
     }
   },
 
@@ -24,7 +27,10 @@ module.exports = {
       max: 10
     },
     migrations: {
-      tableName: 'migrations'
+      directory: __dirname + '/db/migrations'
+    },
+    seeds: {
+      directory: __dirname + '/db/seeds/development'
     }
   },
 
