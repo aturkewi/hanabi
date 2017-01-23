@@ -37,3 +37,12 @@ To run the client app:
 ```bash
 cd client && npm start
 ```
+
+Make sure to create a test and development database in PostgreSQL
+
+In the terminal run `psql`, and once you are in the psql terminal run
+
+```SQL
+CREATE DATABASE hanabi_testing;
+CREATE DATABASE hanabi_development;
+```
