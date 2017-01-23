@@ -1,7 +1,7 @@
 module.exports = {
 
   testing: {
-    client: 'postgreql',
+    client: 'postgresql',
     connection: {
       database: 'hanabi_testing'
     },
@@ -18,7 +18,7 @@ module.exports = {
   },
 
   development: {
-    client: 'postgreql',
+    client: 'postgresql',
     connection: {
       database: 'hanabi_development'
     },
