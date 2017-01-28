@@ -37,6 +37,18 @@ const isPlayable = (card, played) => {
   return card.number === (cardInColor.length + 1)
 }
 
+const updateCards = (clue, player) => {
+  const clueType = typeof(clue) === "string" ? "color" : "number"
+  const hand = player.hand.map(card => {
+    if (card[clueType] === clue){
+      return Object.assign({}, card, { [`${clueType}Exposed`]: true });
+    }else{
+      return card;
+    }
+  })
+  return Object.assign({}, player, { hand });
+}
+
 export function resetGame(){
   return {type: "RESET_GAME"}
 }
@@ -86,4 +98,11 @@ export function playCard(originalPlayer, playedCard, played, originalDeck, origi
     missesRemaining = missesRemaining - 1
     return {type: "MISPLAY_CARD", deck, player, missesRemaining, playedCard, currentPlayerId}
   }
+}
+
+export function giveClue(clue, cluedPlayer, players, originalCurrentPlayerId, originalClueCounter){
+  const player = updateCards(clue, cluedPlayer);
+  const clueCounter = originalClueCounter - 1;
+  const currentPlayerId = nextTurn(players, originalCurrentPlayerId);
+  return {type: "GIVE_CLUE", player, clueCounter, currentPlayerId}
 }
