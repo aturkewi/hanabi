@@ -16,6 +16,7 @@ class Card extends Component{
   }
   
   render(){
+    const { card, currentPlayer } = this.props;
     let buttons = null;
     if(this.props.currentPlayer){
       buttons = ( <div>
@@ -35,9 +36,22 @@ class Card extends Component{
         <button hidden={this.state.hideOptions}>Give Clue</button>
       </div>)
     }
+    const showCard = () => {
+      if (currentPlayer){
+        return(
+          <span className="font-light">
+            {`${card.colorExposed ? card.color : '****'} ${card.numberExposed ? card.number : '**'}`}
+          </span>
+        )
+      }else{
+        return(
+          <span className="font-light">{`${this.props.card.color} ${this.props.card.number}`}</span>
+        )
+      }
+    }
     return (  
       <div key={this.props.index} onClick={this.handleClick}>
-        <span className="font-light">{`${this.props.card.color} ${this.props.card.number}`}</span>
+        {showCard()}
         {buttons}
       </div>
     )
