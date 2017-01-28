@@ -27,13 +27,22 @@ class Card extends Component{
         </button>
         <button 
           hidden={this.state.hideOptions}
-          onClick={this.props.handlePlay.bind(null, this.props.card)}>
+          onClick={this.props.handlePlay.bind(null, null, this.props.card)}>
           Play
         </button>
       </div>)
     }else{
       buttons = ( <div>
-        <button hidden={this.state.hideOptions}>Give Clue</button>
+        <button 
+          hidden={this.state.hideOptions}
+          onClick={this.props.handleClue.bind(null, this.props.card.color)}>
+          Color Clue
+        </button>
+        <button
+          hidden={this.state.hideOptions}
+          onClick={this.props.handleClue.bind(null, this.props.card.number)}>
+          Number Clue
+        </button>
       </div>)
     }
     const showCard = () => {

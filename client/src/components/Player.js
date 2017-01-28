@@ -13,7 +13,7 @@ const Player = props => {
     <div className={props.currentPlayer ? "current-player" : ""}>
       <h3>{props.player.name}</h3>
       <ul className="cards">
-        {props.player.hand.map((c, i)=> <Card card={c} key={i} currentPlayer={props.currentPlayer} handleDiscard={props.handleDiscard} handlePlay={props.handlePlay}/>)}
+        {props.player.hand.map((c, i)=> <Card card={c} key={i} currentPlayer={props.currentPlayer} handleDiscard={props.handleDiscard} handlePlay={props.handlePlay} handleClue={props.handleClue.bind(null, props.player)}/>)}
       </ul>
     </div>
   )

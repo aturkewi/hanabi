@@ -16,6 +16,9 @@ export default (props) => {
     let currentPlayer = players[currentPlayerId];
     props.actions.playCard(currentPlayer, playedCard, played, deck, missesRemaining, players)
   }
+  const handleClue = (cluedPlayer, clue, event) => {
+    props.actions.giveClue(clue, cluedPlayer, players, currentPlayerId, clueCounter);
+  }
   const colors = ['Blue', 'Green', 'Red', 'White', 'Yellow']
   // const sortByColor = cardSet => {
   //   
@@ -45,6 +48,7 @@ export default (props) => {
               clueCounter={props.game.clueCounter}
               handleDiscard={handleDiscard}
               handlePlay={handlePlay}
+              handleClue={handleClue}
             />
           </div>)})
         }
