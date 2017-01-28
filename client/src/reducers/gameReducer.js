@@ -52,6 +52,14 @@ export default (state={}, action) => {
         missesRemaining: action.missesRemaining,
         currentPlayerId: action.currentPlayerId
       })
+    case "GIVE_CLUE":
+      players = state.players.slice();
+      players[action.player.id] = action.player;
+      return Object.assign({}, state, {
+        players,
+        currentPlayerId: action.currentPlayerId,
+        clueCounter: action.clueCounter
+      })
     default:
       return state;
   }
