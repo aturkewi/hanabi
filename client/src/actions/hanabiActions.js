@@ -17,7 +17,7 @@ const removeFromHand = (originalPlayer, discardedCard) => {
 
 const  drawCard = (originalDeck, originalPlayer) => {
   const deck = [...originalDeck];
-  const hand = [getRandCard(deck), ...originalPlayer.hand]
+  const hand = [Object.assign({}, getRandCard(deck)), ...originalPlayer.hand]
   const player = Object.assign({}, originalPlayer, { hand })
   return { deck, player }
 }
