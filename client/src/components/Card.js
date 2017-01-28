@@ -24,7 +24,11 @@ class Card extends Component{
           onClick={this.props.handleDiscard.bind(null, this.props.card)}>
           Discard
         </button>
-        <button hidden={this.state.hideOptions}>Play</button>
+        <button 
+          hidden={this.state.hideOptions}
+          onClick={this.props.handlePlay.bind(null, this.props.card)}>
+          Play
+        </button>
       </div>)
     }else{
       buttons = ( <div>

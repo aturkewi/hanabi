@@ -5,11 +5,16 @@ import Card from './Card';
 import AddPlayer from './AddPlayer';
 
 export default (props) => {
-  const { players, deck, currentPlayerId, clueCounter } = props.game;
+  const { players, deck, currentPlayerId, clueCounter, discard, played, missesRemaining } = props.game;
+  
   const handleDiscard = (discardedCard, event) => {
     let currentPlayer = players[currentPlayerId]
-    event.preventDefault();
+    // event.preventDefault();
     props.actions.discardCard(currentPlayer, discardedCard, clueCounter, deck, players)
+  }
+  const handlePlay = (playedCard, event) => {
+    let currentPlayer = players[currentPlayerId];
+    props.actions.playCard(currentPlayer, playedCard, played, deck, missesRemaining, players)
   }
   const colors = ['Blue', 'Green', 'Red', 'White', 'Yellow']
   // const sortByColor = cardSet => {
@@ -23,13 +28,13 @@ export default (props) => {
       </div>
       <div className="row">
         <div className="col-4">
-          <h3>Clue Remaining: {props.game.clueCounter}</h3>
+          <h3>Clue Remaining: {clueCounter}</h3>
         </div>
         <div className="col-4">
-          <h3>Misses Remaining: {props.game.missesRemaining}</h3>
+          <h3>Misses Remaining: {missesRemaining}</h3>
         </div>
         <div className="col-4">
-          <h3>Cards Remaining: {props.game.deck.length}</h3>
+          <h3>Cards Remaining: {deck.length}</h3>
         </div>
       </div>
       <div className="row">      
@@ -39,6 +44,7 @@ export default (props) => {
               currentPlayer={currentPlayerId === p.id} 
               clueCounter={props.game.clueCounter}
               handleDiscard={handleDiscard}
+              handlePlay={handlePlay}
             />
           </div>)})
         }
@@ -51,7 +57,7 @@ export default (props) => {
               <div className="col-2">
                 <h4>{color}</h4>
                 <ul className="cards">
-                  {props.game.played.filter(c => c.color === color).map((card,i) => (
+                  {played.filter(c => c.color === color).map((card,i) => (
                     <Card card={card} key={i}/>
                   ))}
                 </ul>
@@ -66,7 +72,7 @@ export default (props) => {
               <div className="col-2">
                 <h4>{color}</h4>
                 <ul className="cards">
-                  {props.game.discard.filter(c => c.color === color).map((card,i) => (
+                  {discard.filter(c => c.color === color).map((card,i) => (
                     <Card card={card} key={i}/>
                   ))}
                 </ul>
