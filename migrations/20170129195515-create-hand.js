@@ -10,16 +10,16 @@ module.exports = {
       },
       playerId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
-          allowNull: false,
           model: 'users',
           key: 'id'
         }
       },
       gameId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
-          allowNull: false,
           model: 'games',
           key: 'id'
         }

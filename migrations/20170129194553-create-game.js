@@ -10,8 +10,8 @@ module.exports = {
       },
       currentPlayerId: {
         type: Sequelize.INTEGER,
+        allowNull: true,
         references: {
-          allowNull: true,
           model: 'users',
           key: 'id'
         }
