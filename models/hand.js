@@ -1,13 +1,20 @@
 'use strict';
-module.exports = function(sequelize, DataTypes) {
-  var Hand = sequelize.define('Hand', {
+
+module.exports = (sequelize, DataTypes) => {
+
+  const Hand = sequelize.define('Hand', {
     playerId: DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function(models) {
-        // associations can be defined here
+        const { User, GameCard, Game, Card } = models;
+        Hand.belongsTo(User, { as: "Player", constraints: false });
+        Hand.belongsTo(Game);
+        Hand.hasMany(GameCard);
+        Hand.belongsToMany(Card, { through: GameCard });
       }
     }
   });
+
   return Hand;
 };

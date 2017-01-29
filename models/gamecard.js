@@ -1,13 +1,19 @@
 'use strict';
-module.exports = function(sequelize, DataTypes) {
-  var GameCard = sequelize.define('GameCard', {
+
+module.exports = (sequelize, DataTypes) => {
+
+  const GameCard = sequelize.define('GameCard', {
     displayColor: DataTypes.BOOLEAN
   }, {
     classMethods: {
       associate: function(models) {
-        // associations can be defined here
+        const { Card, Game, Hand } = models;
+        GameCard.belongsTo(Card);
+        GameCard.belongsTo(Game);
+        GameCard.belongsTo(Hand);
       }
     }
   });
+
   return GameCard;
 };
