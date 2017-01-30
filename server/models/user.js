@@ -68,6 +68,10 @@ module.exports = (sequelize, DataTypes) => {
               }
             });
         });
+      },
+
+      fullName: function() {
+        return `${this.firstName} ${this.lastName}`
       }
     },
 

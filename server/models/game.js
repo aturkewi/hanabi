@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         Game.hasMany(Hand);
         Game.belongsToMany(User, { through: Hand });
         Hand.hasMany(GameCard);
-        Hand.belongsToMany(Card, { through: GameCard });
+        Hand.belongsToMany(Card, { through: GameCard, foreignKey: "GameId" });
       }
     }
   });
