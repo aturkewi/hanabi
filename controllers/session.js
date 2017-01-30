@@ -1,4 +1,5 @@
-const { User } = require('../models')
+const { User } = require('../models');
+const Auth = require('../services/auth');
 
 const login = (req, res, next) => {
   console.log(req.body);
@@ -7,7 +8,7 @@ const login = (req, res, next) => {
     res.user = user;
     user.comparePassword(req.body.user.password);
   })
-  .then(response => res.status(200).json(res.user))
+  .then(response => res.status(200).json({ token: Auth.createToken(res.user) }))
   .catch(err => res.status(500).json(err));
 }
 
