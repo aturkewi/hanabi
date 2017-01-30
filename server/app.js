@@ -19,12 +19,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // Import Routes
-const { users, session } = require('./routes/index');
+const { users, session, games } = require('./routes/index');
 
 
 // Use our router index file as our base route for the api
 app.use('/api/v1/users', users);
 app.use('/api/v1/session', session);
+app.use('/api/v1/games', games);
 
 // A catch all route with a 404 err.status that is passed with an error handler
 app.use((req, res, next) => {
