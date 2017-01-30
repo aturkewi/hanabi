@@ -10,6 +10,7 @@ const app = express()
 
 // Import Routes
 const index = require('./routes/index');
+const users = require('./routes/users');
 
 // Set Middleware
 if (process.env.NODE_ENV !== 'test') {
@@ -23,6 +24,7 @@ app.use(cookieParser());
 
 // Use our router index file as our base route for the api
 app.use('/api/v1', index);
+app.use('/api/v1/users', users);
 
 // A catch all route with a 404 err.status that is passed with an error handler
 app.use((req, res, next) => {
