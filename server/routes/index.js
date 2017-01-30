@@ -1,13 +1,20 @@
-// Import Node Modules
-const express = require('express');
+'use strict';
 
-// Declare a router using Express' Router
-const router = express.Router();
+const fs        = require('fs');
+const path      = require('path');
+const basename  = path.basename(module.filename);
+const pry = require('pryjs');
 
-// Root Route
-router.get('/', (req, res) => {
-  res.status(200).json({ message: "Welcome to Hanabi" });
-})
+let routes = {};
 
-// Export Node Module with our router
-module.exports = router;
+fs
+  .readdirSync(__dirname)
+  .filter(function(file) {
+    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+  })
+  .forEach(function(file) {
+    const fileName = file.split('.')[0];
+    routes[fileName] = require(path.join(__dirname, file));
+  });
+
+module.exports = routes;

@@ -19,12 +19,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // Import Routes
-const index = require('./routes/index');
-const users = require('./routes/users');
-const session = require('./routes/session');
+const { users, session } = require('./routes/index');
+
 
 // Use our router index file as our base route for the api
-app.use('/api/v1', index);
 app.use('/api/v1/users', users);
 app.use('/api/v1/session', session);
 
