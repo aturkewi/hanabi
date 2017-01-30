@@ -18,7 +18,7 @@ module.exports = {
         allowNull: false,
         defaultValue: false
       },
-      handId: {
+      HandId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -26,7 +26,7 @@ module.exports = {
           key: "id"
         }
       },
-      cardId: {
+      CardId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -34,7 +34,7 @@ module.exports = {
           key: "id"
         }
       },
-      gameId: {
+      GameId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {

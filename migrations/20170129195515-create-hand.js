@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      playerId: {
+      UserId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -16,14 +16,14 @@ module.exports = {
           key: 'id'
         }
       },
-      gameId: {
+      GameId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'Games',
           key: 'id'
         }
-      }
+      },
     });
   },
   down: (queryInterface, Sequelize) => {
