@@ -2,7 +2,7 @@
 const express = require('express');
 
 // Imported Project Modules
-const usersController = require('../controllers/users.controller');
+const { users } = require('../controllers');
 
 const router = express.Router();
 
@@ -12,6 +12,6 @@ const router = express.Router();
 **/
 router
   .route('/register')
-  .post(usersController.register);
+  .post(users.register);
 
 module.exports = router;
