@@ -16,18 +16,18 @@ class Card extends Component{
   }
   
   render(){
-    const { card, currentPlayer } = this.props;
+    const { card, currentPlayer, handlePlay, handleDiscard, handleClue } = this.props;
     let buttons = null;
-    if(this.props.currentPlayer){
+    if(currentPlayer){
       buttons = ( <div>
         <button 
           hidden={this.state.hideOptions}
-          onClick={this.props.handleDiscard.bind(null, this.props.card)}>
+          onClick={handleDiscard.bind(null, this.props.card)}>
           Discard
         </button>
         <button 
           hidden={this.state.hideOptions}
-          onClick={this.props.handlePlay.bind(null, null, this.props.card)}>
+          onClick={handlePlay.bind(null, this.props.card)}>
           Play
         </button>
       </div>)
@@ -35,12 +35,12 @@ class Card extends Component{
       buttons = ( <div>
         <button 
           hidden={this.state.hideOptions}
-          onClick={this.props.handleClue.bind(null, this.props.card.color)}>
+          onClick={handleClue ? handleClue.bind(null, this.props.card.color) : ''}>
           Color Clue
         </button>
         <button
           hidden={this.state.hideOptions}
-          onClick={this.props.handleClue.bind(null, this.props.card.number)}>
+          onClick={handleClue ? handleClue.bind(null, this.props.card.number) : ''}>
           Number Clue
         </button>
       </div>)
