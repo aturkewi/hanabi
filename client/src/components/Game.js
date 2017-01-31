@@ -17,6 +17,7 @@ export default (props) => {
     props.actions.playCard(currentPlayer, playedCard, played, deck, missesRemaining, players)
   }
   const handleClue = (cluedPlayer, clue, event) => {
+    
     props.actions.giveClue(clue, cluedPlayer, players, currentPlayerId, clueCounter);
   }
   const colors = ['Blue', 'Green', 'Red', 'White', 'Yellow']
@@ -57,8 +58,8 @@ export default (props) => {
         <div className="col-6">
           <h3>Played Cards</h3>
           <div className="row">
-            {colors.map(color => (
-              <div className="col-2">
+            {colors.map((color, i) => (
+              <div className="col-2" key={i}>
                 <h4>{color}</h4>
                 <ul className="cards">
                   {played.filter(c => c.color === color).map((card,i) => (
@@ -72,8 +73,8 @@ export default (props) => {
         <div className="col-6">
           <h3>Discarded Cards</h3>
           <div className="row">
-            {colors.map(color => (
-              <div className="col-2">
+            {colors.map((color, i) => (
+              <div className="col-2" key={i}>
                 <h4>{color}</h4>
                 <ul className="cards">
                   {discard.filter(c => c.color === color).map((card,i) => (
