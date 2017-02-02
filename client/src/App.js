@@ -4,16 +4,25 @@ import React from 'react';
 import './App.css';
 import './simple-grid.css'
 import { addPlayer, startGame, discardCard, increaseClue, drawCard, nextTurn, playCard, giveClue } from './actions/hanabiActions'
-import Game from './components/Game'
 
 const App = props => {
   return (
     <div className="App">
       <div className="container">
-        <Game
-          actions={props.actions}
-          game={props.game}
-          />
+        {/*
+          <NavBard />
+        */}
+        <h1>Hello World</h1>
+        <div>{props.children}</div>
+      
+        {/*
+          <Game
+            actions={props.actions}
+            game={props.game}
+            />
+        */}
+      
+      
       </div>
     </div>
   );
