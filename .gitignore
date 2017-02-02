@@ -1,4 +1,8 @@
 # Ignore all node_modules
+
 /node_modules
 /client/node_modules
 /server/config.js
+
+*log
+client/*log
