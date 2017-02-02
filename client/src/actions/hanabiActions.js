@@ -95,7 +95,7 @@ export function playCard(originalPlayer, playedCard, played, originalDeck, origi
   if (isPlayable(playedCard, played)){
     return {type: "PLAY_CARD", deck, player, currentPlayerId, playedCard}
   }else{
-    missesRemaining = missesRemaining - 1
+    missesRemaining -= 1
     return {type: "MISPLAY_CARD", deck, player, missesRemaining, playedCard, currentPlayerId}
   }
 }
