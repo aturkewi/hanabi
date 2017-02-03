@@ -1,6 +1,22 @@
-const = createUser(user) {
-  return fetch('/api/v1/users/register')
-    .then(response => response.json())
+const createUser = (user) => {
+  /*
+    NOTE: THIS will only work for dev. This needs to be a dynamic URL for production
+  */
+  // debugger;
+  return fetch('/api/v1/users/register', {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ user: user })
+  })
+    .then((response) => {
+      return response.json()
+    })
+    .then((token) => {
+      return token;
+    })
     .catch(err => err);
 }
 

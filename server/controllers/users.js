@@ -1,7 +1,9 @@
 const { User } = require('../models');
 const Auth = require('../services/auth');
+const pry = require('pryjs');
 
 const register = (req, res, next) => {
+  console.log(req.body);
   User.create({
     username: req.body.username,
     email: req.body.email,
