@@ -5,8 +5,8 @@ const createUser = (user) => {
   // debugger;
   return fetch('/api/v1/users/register', {
     method: 'POST',
-    mode: 'no-cors',
     headers: {
+      'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ user: user })
