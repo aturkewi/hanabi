@@ -3,12 +3,7 @@ const Auth = require('../services/auth');
 const pry = require('pryjs');
 
 const register = (req, res, next) => {
-  eval(pry.it);
-  User.create({
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password
-  })
+  User.create(req.body.user)
   .then(user => res.status(200).json({ token: Auth.createToken(user) }))
   .catch(err => res.json(err));
 }
