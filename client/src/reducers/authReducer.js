@@ -8,7 +8,6 @@ export default (state = {
 }, action) => {
   switch(action.type){
     case 'UPDATE_ERRORS':
-    debugger;
       return Object.assign({}, state, { errors: action.errors })
     default:
       return state
