@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SignUp = ({ errors, actions }) => {
+export default ({ errors, actions }) => {
 
   const {
     signUp,
@@ -96,5 +96,3 @@ const SignUp = ({ errors, actions }) => {
     </div>
   )
 }
-
-module.exports = SignUp;

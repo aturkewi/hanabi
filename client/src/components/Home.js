@@ -1,9 +1,9 @@
 import React from 'react';
 
 export default (props) => {
-  return(
+  return (
     <div>
-      Welcome to hanabi app
+      Welcome to Hanabi
     </div>
   )
 }

@@ -6,7 +6,10 @@ import './simple-grid.css'
 import { addPlayer, startGame, discardCard, increaseClue, drawCard, nextTurn, playCard, giveClue } from './actions/hanabiActions'
 import { signUp, updateErrors } from './actions/authActions'
 
-const App = props => {
+import NavBar from './components/navigation/Navbar';
+import Home from './components/Home'
+
+const App = (props) => {
 
   const byChild = () => {
     switch(props.location.pathname){
@@ -30,24 +33,12 @@ const App = props => {
   return (
     <div className="App">
       <div className="container">
-        {/*
-          <NavBard />
-        */}
-        <h1>Hello World</h1>
+        <NavBar auth={props.auth} />
         <div>
           {
-            props.children && byChild()
+            (props.children && byChild()) || <Home />
           }
         </div>
-
-        {/*
-          <Game
-            actions={props.actions}
-            game={props.game}
-            />
-        */}
-
-
       </div>
     </div>
   );
