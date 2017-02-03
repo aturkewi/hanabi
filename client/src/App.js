@@ -4,17 +4,18 @@ import React from 'react';
 import './App.css';
 import './simple-grid.css'
 import { addPlayer, startGame, discardCard, increaseClue, drawCard, nextTurn, playCard, giveClue } from './actions/hanabiActions'
-import { handleSignUp } from './actions/authActions'
+import { signUp, updateErrors } from './actions/authActions'
 
 const App = props => {
-  
+
   const byChild = () => {
     switch(props.location.pathname){
       case "/signup":
         return React.cloneElement(props.children, {
-          auth: props.auth,
+          errors: props.auth.errors,
           actions: {
-            handleSignUp: props.actions.handleSignUp
+            signUp: props.actions.signUp,
+            updateErrors: props.actions.updateErrors
           }
         });
       case "/games":
@@ -25,7 +26,7 @@ const App = props => {
         return;
     }
   };
-  
+
   return (
     <div className="App">
       <div className="container">
@@ -38,15 +39,15 @@ const App = props => {
             props.children && byChild()
           }
         </div>
-      
+
         {/*
           <Game
             actions={props.actions}
             game={props.game}
             />
         */}
-      
-      
+
+
       </div>
     </div>
   );
@@ -60,7 +61,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-  return {actions: bindActionCreators({ addPlayer, startGame, discardCard, increaseClue, drawCard, nextTurn, playCard, giveClue, handleSignUp }, dispatch)};
+  return {actions: bindActionCreators({ addPlayer, startGame, discardCard, increaseClue, drawCard, nextTurn, playCard, giveClue, signUp, updateErrors }, dispatch)};
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

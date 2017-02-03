@@ -1,27 +1,15 @@
 export default (state = {
-  form: {
-    firstName: '',
-    lastName: '',
-    username: '',
-    email: '',
-    password: '',
-    passwordConfirmation: '',
-  }
-  /* 
+  errors: [],
+  /*
   isAuthenticated: checkToken(),
   profile: getProfile(),
-  errorMessages: [], 
-  form: {
-    firstName: 
-    lastName:
-    username: 
-    email: 
-    password:
-    passwordConfirmation:
-  }
+  errors: [],
   */
 }, action) => {
   switch(action.type){
+    case 'UPDATE_ERRORS':
+    debugger;
+      return Object.assign({}, state, { errors: action.errors })
     default:
       return state
   }
