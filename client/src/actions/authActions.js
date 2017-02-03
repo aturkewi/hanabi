@@ -3,6 +3,7 @@ import { createUser } from '../services/userService';
 export const userSignupSuccess = (profile) => {
   return {
     type: 'USER_SIGNUP_SUCCESS',
+    isAuthenticated: true,
     profile,
   }
 }
