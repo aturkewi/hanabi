@@ -4,7 +4,18 @@ const pry = require('pryjs');
 
 const register = (req, res, next) => {
   User.create(req.body.user)
-  .then(user => res.status(200).json({ token: Auth.createToken(user) }))
+  .then((user) => {
+    const { username, email, firstName, lastName } = user;
+    res.status(200).json({
+      token: Auth.createToken(user),
+      profile: {
+        username,
+        email,
+        firstName,
+        lastName
+      },
+    });
+  })
   .catch(err => res.json(err));
 }
 

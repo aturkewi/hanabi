@@ -24,7 +24,7 @@ const SignUp = ({ errors, actions }) => {
       newErrors.push(`The ${key} must not be blank`);
     }
 
-    if (user.password.length < 8 || user.password.length > 24) {
+    if (!user.password || user.password.length < 8 || user.password.length > 24) {
       newErrors.push("Password must be between 8 and 24 characters");
       return updateErrors(newErrors);
     }
@@ -41,7 +41,7 @@ const SignUp = ({ errors, actions }) => {
     return signUp(user);
   }
 
-  let errorMessages = errors.map(error => <p>{error}</p>);
+  let errorMessages = errors.map((error, index) => <p key={index} >{error}</p>);
 
   return(
     <div>

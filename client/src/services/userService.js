@@ -14,9 +14,7 @@ const createUser = (user) => {
     .then((response) => {
       return response.json()
     })
-    .then((token) => {
-      return token;
-    })
+    .then(obj => obj)
     .catch(err => err);
 }
 
