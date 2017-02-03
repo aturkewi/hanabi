@@ -27,8 +27,7 @@ export const signUp = (user) => {
           return dispatch(updateErrors(errors));
         }
         storeToken(data.token);
-        const profile = decryptToken(token);
-        dispatch(userSignupSuccess(profile));
+        dispatch(userSignupSuccess(data.profile));
       })
       .catch(err => err);
   }
