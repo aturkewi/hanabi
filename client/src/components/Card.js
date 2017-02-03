@@ -16,24 +16,51 @@ class Card extends Component{
   }
   
   render(){
+    const { card, currentPlayer, handlePlay, handleDiscard, handleClue } = this.props;
     let buttons = null;
-    if(this.props.currentPlayer){
+    if(currentPlayer){
       buttons = ( <div>
         <button 
           hidden={this.state.hideOptions}
-          onClick={this.props.handleDiscard.bind(null, this.props.card)}>
+          onClick={handleDiscard.bind(null, this.props.card)}>
           Discard
         </button>
-        <button hidden={this.state.hideOptions}>Play</button>
+        <button 
+          hidden={this.state.hideOptions}
+          onClick={handlePlay.bind(null, this.props.card)}>
+          Play
+        </button>
       </div>)
     }else{
       buttons = ( <div>
-        <button hidden={this.state.hideOptions}>Give Clue</button>
+        <button 
+          hidden={this.state.hideOptions}
+          onClick={handleClue ? handleClue.bind(null, this.props.card.color) : ''}>
+          Color Clue
+        </button>
+        <button
+          hidden={this.state.hideOptions}
+          onClick={handleClue ? handleClue.bind(null, this.props.card.number) : ''}>
+          Number Clue
+        </button>
       </div>)
+    }
+    const showCard = () => {
+      if (currentPlayer){
+        return(
+          <span className="font-light">
+            {`${card.colorExposed ? card.color : '****'} ${card.numberExposed ? card.number : '**'}`}
+          </span>
+        )
+      }else{
+        return(
+          <span className="font-light">{`${this.props.card.color} ${this.props.card.number}`}</span>
+        )
+      }
     }
     return (  
       <div key={this.props.index} onClick={this.handleClick}>
-        <span className="font-light">{`${this.props.card.color} ${this.props.card.number}`}</span>
+        {showCard()}
         {buttons}
       </div>
     )

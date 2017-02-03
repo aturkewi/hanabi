@@ -45,24 +45,24 @@ Make sure to create a test and development database in PostgreSQL
 In the terminal run `psql`, and once you are in the psql terminal run
 
 ```SQL
-CREATE DATABASE hanabi_testing;
+CREATE DATABASE hanabi_test;
 CREATE DATABASE hanabi_development;
 ```
 
 To create a new migration file:
 
 ```bash
-knex migrate:make <tableName>
+sequelize model:create --name <tableName> --attributes <column:type>
 ```
 
 To run migrations run:
 
 ```bash
-knex migrate:latest
+sequelize db:migrate
 ```
 
 To rollback migrations run:
 
 ```bash
-knex migrate:rollback
+sequelize db:migrate:undo
 ```

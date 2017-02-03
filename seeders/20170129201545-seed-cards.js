@@ -1,3 +1,5 @@
+'use strict';
+
 const deck = [
   {color: "Red", number: 1},
   {color: "Red", number: 1},
@@ -50,15 +52,30 @@ const deck = [
   {color: "White", number: 4},
   {color: "White", number: 5}
 ]
-const Card = require('../../../app/models/card');
 
-exports.seed = (knex, Promise) => {
-  // Deletes ALL existing entries
-  return knex('cards').del()
-    .then(() => {
-      console.log('hi');
-      return Promise.all(
-        deck.map( card => Card.create(card) )
-      );
-    });
+module.exports = {
+  up: (queryInterface, Sequelize) => {
+    return queryInterface.bulkInsert['Card', deck.map(card => card)], {});
+    /*
+      Add altering commands here.
+      Return a promise to correctly handle asynchronicity.
+
+      Example:
+      return queryInterface.bulkInsert('Person', [{
+        name: 'John Doe',
+        isBetaMember: false
+      }], {});
+    */
+  },
+
+  down: (queryInterface, Sequelize) => {
+    return queryInterface.bulkDelete['Card', null, {});
+    /*
+      Add reverting commands here.
+      Return a promise to correctly handle asynchronicity.
+
+      Example:
+      return queryInterface.bulkDelete('Person', null, {});
+    */
+  }
 };

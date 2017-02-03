@@ -17,7 +17,7 @@ const removeFromHand = (originalPlayer, discardedCard) => {
 
 const  drawCard = (originalDeck, originalPlayer) => {
   const deck = [...originalDeck];
-  const hand = [...originalPlayer.hand, getRandCard(deck)]
+  const hand = [Object.assign({}, getRandCard(deck)), ...originalPlayer.hand]
   const player = Object.assign({}, originalPlayer, { hand })
   return { deck, player }
 }
@@ -30,6 +30,23 @@ const nextTurn = (players, originalCurrentPlayer) => {
     currentPlayerId = originalCurrentPlayer + 1 
   }
   return currentPlayerId
+}
+
+const isPlayable = (card, played) => {
+  const cardInColor = played.filter(c => c.color === card.color)
+  return card.number === (cardInColor.length + 1)
+}
+
+const updateCards = (clue, player) => {
+  const clueType = typeof(clue) === "string" ? "color" : "number"
+  const hand = player.hand.map(card => {
+    if (card[clueType] === clue){
+      return Object.assign({}, card, { [`${clueType}Exposed`]: true });
+    }else{
+      return card;
+    }
+  })
+  return Object.assign({}, player, { hand });
 }
 
 export function resetGame(){
@@ -61,10 +78,31 @@ export function startGame(originalPlayers, originalDeck){
 export function discardCard(originalPlayer, discardedCard, currentClues, originalDeck, players) {
   let player = removeFromHand(originalPlayer, discardedCard)
   const clueCounter = increaseClue(currentClues)
-  let playerAndDeck = drawCard(originalDeck, player)
+  const playerAndDeck = drawCard(originalDeck, player)
   const deck = playerAndDeck.deck
   player = playerAndDeck.player
   const currentPlayerId = nextTurn(players, originalPlayer.id)
   return {type: "DISCARD_CARD", deck, player, clueCounter, discardedCard, currentPlayerId}
-  // return {type: "INCREASE_CLUE", clueCounter}
+}
+
+export function playCard(originalPlayer, playedCard, played, originalDeck, originalMissesRemaining, players){
+  let player = removeFromHand(originalPlayer, playedCard);
+  let missesRemaining = originalMissesRemaining;
+  const playerAndDeck = drawCard(originalDeck, player)
+  const deck = playerAndDeck.deck
+  player = playerAndDeck.player
+  const currentPlayerId = nextTurn(players, originalPlayer.id)
+  if (isPlayable(playedCard, played)){
+    return {type: "PLAY_CARD", deck, player, currentPlayerId, playedCard}
+  }else{
+    missesRemaining = missesRemaining - 1
+    return {type: "MISPLAY_CARD", deck, player, missesRemaining, playedCard, currentPlayerId}
+  }
+}
+
+export function giveClue(clue, cluedPlayer, players, originalCurrentPlayerId, originalClueCounter){
+  const player = updateCards(clue, cluedPlayer);
+  const clueCounter = originalClueCounter - 1;
+  const currentPlayerId = nextTurn(players, originalCurrentPlayerId);
+  return {type: "GIVE_CLUE", player, clueCounter, currentPlayerId}
 }

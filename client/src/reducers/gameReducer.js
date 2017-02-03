@@ -21,7 +21,7 @@ export default (state={}, action) => {
       let { players, deck } = action
       return Object.assign({}, state, { players, deck })
     case "DISCARD_CARD":
-      const discard = [...state.discard, action.discardedCard]
+      let discard = [...state.discard, action.discardedCard]
       players = state.players.slice()
       players[action.player.id] = action.player
       return Object.assign({}, state, { 
@@ -30,6 +30,35 @@ export default (state={}, action) => {
         discard,
         clueCounter: action.clueCounter,
         currentPlayerId: action.currentPlayerId
+      })
+    case "PLAY_CARD":
+      players = state.players.slice();
+      players[action.player.id] = action.player
+      let played = [...state.played, action.playedCard]
+      return Object.assign({}, state, {
+        players,
+        played,
+        deck: action.deck,
+        currentPlayerId: action.currentPlayerId
+      })
+    case "MISPLAY_CARD":
+      players = state.players.slice();
+      players[action.player.id] = action.player
+      discard = [...state.discard, action.playedCard]
+      return Object.assign({}, state, {
+        players,
+        discard,
+        deck: action.deck,
+        missesRemaining: action.missesRemaining,
+        currentPlayerId: action.currentPlayerId
+      })
+    case "GIVE_CLUE":
+      players = state.players.slice();
+      players[action.player.id] = action.player;
+      return Object.assign({}, state, {
+        players,
+        currentPlayerId: action.currentPlayerId,
+        clueCounter: action.clueCounter
       })
     default:
       return state;
