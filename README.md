@@ -15,8 +15,7 @@ To run this app make sure that you have node installed go here, if you need to i
 with `NPM` you need to have three global Node Modules installed
 
 ```bash
-npm install nodemon -g
-npm install create-react-app -g
+  npm install create-react-app -g
 ```
 
 In the root directory install the node modules
@@ -29,14 +28,9 @@ cd client && npm install
 To run the server, go to the root directory and run:
 
 ```bash
-npm run server
+npm run server:dev
 ```
 
-To run the client app:
-
-```bash
-cd client && npm start
-```
 
 ## Set up Database and Run migrations
 
