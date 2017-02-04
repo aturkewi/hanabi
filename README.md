@@ -15,7 +15,7 @@ To run this app make sure that you have node installed go here, if you need to i
 with `NPM` you need to have three global Node Modules installed
 
 ```bash
-  npm install create-react-app -g
+  npm install -g create-react-app sequilize-clie
 ```
 
 In the root directory install the node modules

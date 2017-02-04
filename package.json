@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start:dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server:dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "nodemon ./bin/www",
     "client": "babel-node startClient.js"
   },
