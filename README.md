@@ -15,7 +15,7 @@ To run this app make sure that you have node installed go here, if you need to i
 with `NPM` you need to have three global Node Modules installed
 
 ```bash
-  npm install -g create-react-app sequilize-clie
+  npm install -g create-react-app sequilize-cli nodemon
 ```
 
 In the root directory install the node modules
@@ -25,12 +25,17 @@ npm install
 cd client && npm install
 ```
 
-To run the server, go to the root directory and run:
+To run the server, go to the `server/` directory and create a file called `config.js`:
 
-```bash
-npm run server:dev
+```javascript
+module.exports = {
+  auth: {
+    secret: 'app-secret'
+  }
+}
 ```
 
+Then go to the root dir and run `npm run server:dev`.
 
 ## Set up Database and Run migrations
 
