@@ -10,6 +10,11 @@ module.exports = (app) => {
     /**
       @api {post} /api/v1/games Create a Game
       @apiGroup Games
+      @apiHeader {String} Authorization Token of authenticated user
+      @apiHeaderExample {json} Header
+        {
+          "Authorization": "JWT xyz.abc.123.hgf"
+        }
       @apiSuccess {Number} id Game id
       @apiSuccess {Number} currentPlayerId Game current player reference id
       @apiSuccess {Number} clueCounter Game clue count

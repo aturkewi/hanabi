@@ -65,24 +65,24 @@ module.exports = (app) => {
       @apiHeader {String} Authorization Token of authenticated user
       @apiHeaderExample {json} Header
         {"Authorization": "JWT xyz.abc.123.hgf"}
-        @apiSuccess {Number} id id
-        @apiSuccess {String} firstName User first name
-        @apiSuccess {String} lastName User last name
-        @apiSuccess {String} username User username
-        @apiSuccess {String} email User email
-        @apiSuccess {Date} updated_at User date last updated
-        @apiSuccess {Date} created_at User date created
-        @apiSuccessExample {json} Success
-          HTTP/1.1 200 OK
-          {
-            "id": 1,
-            "firstName": "Luke",
-            "lastName": "Ghenco",
-            "username": "lukeghenco"
-            "email": "luke@gmail.com",
-            "updated_at": "2017-02-10T15:30:11.800z",
-            "created_at": "2017-02-10T15:20:11.800z"
-          }
+      @apiSuccess {Number} id id
+      @apiSuccess {String} firstName User first name
+      @apiSuccess {String} lastName User last name
+      @apiSuccess {String} username User username
+      @apiSuccess {String} email User email
+      @apiSuccess {Date} updated_at User date last updated
+      @apiSuccess {Date} created_at User date created
+      @apiSuccessExample {json} Success
+        HTTP/1.1 200 OK
+        {
+          "id": 1,
+          "firstName": "Luke",
+          "lastName": "Ghenco",
+          "username": "lukeghenco"
+          "email": "luke@gmail.com",
+          "updated_at": "2017-02-10T15:30:11.800z",
+          "created_at": "2017-02-10T15:20:11.800z"
+        }
       @apiErrorExample {json} Find error
         HTTP/1.1 412 Precondition Failed
     */
