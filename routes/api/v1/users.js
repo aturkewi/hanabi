@@ -1,12 +1,14 @@
 import _ from 'lodash';
+import jwt from 'jwt-simple';
 
 module.exports = (app) => {
   const User = app.db.models.User;
   const authenticate = app.auth.authenticate;
+  const jwtSecret = app.libs.config.jwtSecret;
 
   app.route("/api/v1/users")
     /**
-      @api {post} /api/v1/users Register a new user
+      @api {post} /api/v1/users Create an authenticated user
       @apiGroup Users
       @apiParam {String} firstName User first name
       @apiParam {String} lastName User last name
@@ -21,21 +23,24 @@ module.exports = (app) => {
           "email": "luke@gmail.com",
           "password": "123456"
           }
-      @apiSuccess {Number} id id
-      @apiSuccess {String} firstName User first name
-      @apiSuccess {String} lastName User last name
-      @apiSuccess {String} username User username
-      @apiSuccess {String} email User email
-      @apiSuccess {Date} updated_at User date last updated
-      @apiSuccess {Date} created_at User date created
+      @apiSuccess {Object} user User object
+      @apiSuccess {Number} user.id User id
+      @apiSuccess {String} user.firstName User first name
+      @apiSuccess {String} user.lastName User last name
+      @apiSuccess {String} user.username User username
+      @apiSuccess {String} user.email User email
+      @apiSuccess {String} token User JWT token
       @apiSuccessExample {json} Success
         HTTP/1.1 200 OK
         {
-          "id": 1,
-          "firstName": "Luke",
-          "lastName": "Ghenco",
-          "username": "lukeghenco"
-          "email": "luke@gmail.com",
+          "user": {
+            "id": 1,
+            "firstName": "Luke",
+            "lastName": "Ghenco",
+            "username": "lukeghenco"
+            "email": "luke@gmail.com",
+          },
+          "token": "abc.123.def.456"
         }
       @apiErrorExample {json} Register error
         HTTP/1.1 412 Precondition Failed
@@ -43,7 +48,11 @@ module.exports = (app) => {
     .post((req, res) => {
       User
         .create(req.body)
-        .then(user => res.json(_.omit(user, ["dataValues.password"])))
+        .then(response => {
+          const token = jwt.encode({ id: response.id }, jwtSecret);
+          const user = _.omit(response, ["dataValues.password"]);
+          res.json({ user, token });
+        })
         .catch(err => res.status(412).json({ msg: err.message }));
     });
 
@@ -51,7 +60,7 @@ module.exports = (app) => {
     .all(authenticate())
     /**
       @api { get } /
-      @api {get} /api/v1/users/:id Return the authenticated user's data
+      @api {get} /api/v1/users/:id Get an authenticated user's data
       @apiGroup Users
       @apiHeader {String} Authorization Token of authenticated user
       @apiHeaderExample {json} Header
@@ -80,9 +89,9 @@ module.exports = (app) => {
     .get((req, res) => {
       User
         .findById(req.params.id, {
-          attributes: ["id", "name", "email"]
+          attributes: ["id", "firstName", "lastName", "username", "email"]
         })
-        .then(result => res.json(result))
+        .then(user => res.json(user))
         .catch(err => res.status(412).json({ msg: err.message }));
     })
     /**
