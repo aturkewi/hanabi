@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 
-  const Game = sequelize.define('Game', {
+  const Game = sequelize.define('game', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -10,10 +10,6 @@ module.exports = (sequelize, DataTypes) => {
     currentPlayerId: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      references: {
-        model: 'User',
-        key: 'id'
-      }
     },
     clueCounter: {
       type: DataTypes.INTEGER,
@@ -36,14 +32,9 @@ module.exports = (sequelize, DataTypes) => {
       associate: function(models) {
         const { Hand, GameCard, Card, User } = models;
         Game.hasMany(Hand);
-        Game.belongsToMany(User, {
-          through: Hand
-        });
+        Game.belongsToMany(User, { through: Hand });
         Game.hasMany(GameCard);
-        Game.belongsToMany(Card, {
-          through: GameCard,
-          foreignKey: "gameId"
-        });
+        Game.belongsToMany(Card, { through: GameCard });
       }
     }
   });

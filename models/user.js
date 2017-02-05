@@ -11,7 +11,7 @@ const hashPassword = (password) => {
 
 module.exports = (sequelize, DataTypes) => {
 
-  const User = sequelize.define('User', {
+  const User = sequelize.define('user', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -106,9 +106,7 @@ module.exports = (sequelize, DataTypes) => {
       associate: function(models) {
         const { Hand, Game } = models;
         User.hasMany(Hand)
-        User.belongsToMany(Game, {
-          through: Hand
-        });
+        User.belongsToMany(Game, { through: Hand });
       },
 
     },

@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 
-  const GameCard = sequelize.define('GameCard', {
+  const GameCard = sequelize.define('gameCard', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -16,30 +16,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
-    },
-    handId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: "Hand",
-        key: "id"
-      }
-    },
-    cardId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: "Card",
-        key: "id"
-      }
-    },
-    gameId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: "Game",
-        key: "id"
-      }
     },
     location: {
       type: DataTypes.ENUM('inDeck', 'inHand', 'played', 'discarded'),

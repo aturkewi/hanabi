@@ -1,27 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
 
-  const Hand = sequelize.define('Hand', {
+  const Hand = sequelize.define('hand', {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER
-    },
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'User',
-        key: 'id'
-      }
-    },
-    gameId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'Game',
-        key: 'id'
-      }
     },
   }, {
     timestamps: false,
@@ -31,9 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         Hand.belongsTo(Game);
         Hand.belongsTo(User);
         Hand.hasMany(GameCard);
-        Hand.belongsToMany(Card, {
-          through: GameCard
-        });
+        Hand.belongsToMany(Card, { through: GameCard });
       }
     }
   });
