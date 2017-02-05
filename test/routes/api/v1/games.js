@@ -7,22 +7,37 @@ describe("Routes: Games", () => {
   let testUser;
   let testGame;
 
-  beforeEach(done => {
+  before(done => {
+    Game
+      .destroy({ where: {} });
     User
       .destroy({ where: {} })
-      .then(() => User.create({
+      .then(() => done());
+  })
+
+  beforeEach(done => {
+    User
+      .create({
         firstName: "Luke",
         lastName: "Ghenco",
         username: "lukeghenco",
         email: "luke@gmail.com",
         password: "12345"
-      }))
+      })
       .then(user => {
         testUser = user;
         token = jwt.encode({ id: user.id }, jwtSecret);
         done();
       });
   });
+
+  afterEach(done => {
+    Game
+      .destroy({ where: {} });
+    User
+      .destroy({ where: {} })
+      .then(() => done());
+  })
 
   describe("POST /games", () => {
     describe("status 200", () => {
