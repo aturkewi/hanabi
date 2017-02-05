@@ -2,6 +2,15 @@
 
 const bcrypt = require('bcrypt');
 
+const hashPassword = (password) => {
+  return new Promise((resolve, reject) => {
+    bcrypt.hash(password, 10, (err, hash) => {
+      if (err) return reject(err);
+      resolve(hash);
+    });
+  });
+}
+
 module.exports = (sequelize, DataTypes) => {
 
   const User = sequelize.define('user', {
@@ -51,6 +60,15 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
 
+    hooks: {
+      beforeCreate: user => {
+        return hashPassword(user.password)
+        .then(function(hash) {
+          user.password = hash;
+        });
+      });
+    }
+
     classMethods: {
 
       associate: function(models) {
@@ -84,21 +102,6 @@ module.exports = (sequelize, DataTypes) => {
     },
 
   });
-
-  User.beforeCreate(function(user, options) {
-    return hashPassword(user.password).then(function(hash) {
-      user.password = hash;
-    });
-  });
-
-  const hashPassword = (password) => {
-    return new Promise((resolve, reject) => {
-      bcrypt.hash(password, 10, (err, hash) => {
-        if (err) return reject(err);
-        resolve(hash);
-      });
-    });
-  }
 
   return User;
 };
