@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 
-  const Hand = sequelize.define('hand', {
+  const Hand = sequelize.define('Hand', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'users',
+        model: 'User',
         key: 'id'
       }
     },
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'games',
+        model: 'Game',
         key: 'id'
       }
     },
@@ -27,12 +27,12 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
     classMethods: {
       associate: function(models) {
-        const { user, gameCard, game, card } = models;
-        Hand.belongsTo(game);
-        Hand.belongsTo(user);
-        Hand.hasMany(gameCard);
-        Hand.belongsToMany(card, {
-          through: gameCard
+        const { User, GameCard, Game, Card } = models;
+        Hand.belongsTo(Game);
+        Hand.belongsTo(User);
+        Hand.hasMany(GameCard);
+        Hand.belongsToMany(Card, {
+          through: GameCard
         });
       }
     }

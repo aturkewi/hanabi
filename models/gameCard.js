@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 
-  const GameCard = sequelize.define('gameCard', {
+  const GameCard = sequelize.define('GameCard', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: "hands",
+        model: "Hand",
         key: "id"
       }
     },
@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: "cards",
+        model: "Card",
         key: "id"
       }
     },
@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: "games",
+        model: "Game",
         key: "id"
       }
     },
@@ -47,10 +47,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: function(models) {
-        const { card, game, hand } = models;
-        GameCard.belongsTo(card);
-        GameCard.belongsTo(game);
-        GameCard.belongsTo(hand);
+        const { Card, Game, Hand } = models;
+        GameCard.belongsTo(Card);
+        GameCard.belongsTo(Game);
+        GameCard.belongsTo(Hand);
       }
     }
   });

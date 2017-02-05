@@ -11,7 +11,7 @@ const hashPassword = (password) => {
 
 module.exports = (sequelize, DataTypes) => {
 
-  const User = sequelize.define('user', {
+  const User = sequelize.define('User', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -34,20 +34,46 @@ module.exports = (sequelize, DataTypes) => {
     },
     username: {
       type: DataTypes.STRING,
+      unique: {
+        args: true,
+        msg: "Username is already in use!"
+      },
       allowNull: false,
       validate: {
         notEmpty: true,
-        unique: true,
+        unique: function(username, next) {
+          User.find({ where: {
+            username: username
+          }})
+          .then((user) => {
+            if (user && this.id !== user.id) {
+              return next('Username already in use!');
+            }
+            return next()
+          })
+          .catch(err => next(err));
+        }
       },
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isEmail: true,
-        unique: true,
         notEmpty: true,
-      }
+        isEmail: true,
+        unique: function(email, next) {
+          User.find({ where: {
+            email: email
+          }})
+          .then((user) => {
+            if (user && this.id !== user.id) {
+              return next('Email is already in use!');
+            }
+            return next()
+          })
+          .catch(err => next(err));
+        },
+      },
     },
     password: {
       type: DataTypes.STRING,
@@ -55,6 +81,14 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: true
       }
+    },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE
     },
   }, {
 
@@ -70,10 +104,10 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
 
       associate: function(models) {
-        const { hand, game } = models;
-        User.hasMany(hand)
-        User.belongsToMany(game, {
-          through: hand
+        const { Hand, Game } = models;
+        User.hasMany(Hand)
+        User.belongsToMany(Game, {
+          through: Hand
         });
       },
 
