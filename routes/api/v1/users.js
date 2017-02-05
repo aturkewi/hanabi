@@ -15,14 +15,14 @@ module.exports = (app) => {
       @apiParam {String} username User username
       @apiParam {String} email User email
       @apiParam {String} password User password
-      @apiParamExample {json} Input
+      @apiParamExample {json} Parameters
         {
           "firstName": "Luke",
           "lastName": "Ghenco",
           "username": "lukeghenco"
           "email": "luke@gmail.com",
           "password": "123456"
-          }
+        }
       @apiSuccess {Object} user User object
       @apiSuccess {Number} user.id User id
       @apiSuccess {String} user.firstName User first name

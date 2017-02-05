@@ -7,6 +7,13 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+    },
     currentPlayerId: {
       type: DataTypes.INTEGER,
       allowNull: true,

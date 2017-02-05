@@ -45,14 +45,15 @@ describe("Routes: Games", () => {
         request
           .post("/api/v1/games")
           .set("Authorization", `JWT ${token}`)
+          .send({ title: "Flatiron instructors game" })
           .expect(200)
           .end((err, res) => {
-            expect(res.body).to.a('object');
-            // expect(res.body.user.firstName).to.eql("Avidor");
-            // expect(res.body.user.lastName).to.eql("Turkewitz");
-            // expect(res.body.user.username).to.eql("aturkewi");
-            // expect(res.body.user.email).to.eql("avidor@gmail.com");
-            // expect(res.body.token).to.exist;
+            expect(res.body).to.be.an('object');
+            expect(res.body.title).to.eql("Flatiron instructors game");
+            expect(res.body.currentPlayerId).to.eql(testUser.id);
+            expect(res.body.hands).to.be.an('array');
+            expect(res.body.clueCounter).to.eql(8);
+            expect(res.body.missesRemaining).to.eql(3);
             done(err);
           });
       });

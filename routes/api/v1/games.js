@@ -15,7 +15,13 @@ module.exports = (app) => {
         {
           "Authorization": "JWT xyz.abc.123.hgf"
         }
+      @apiParam {String} title Game title
+      @apiParamExample {json} Parameters
+        {
+          "title": "Flatiron instructors game"
+        }
       @apiSuccess {Number} id Game id
+      @apiSuccess {String} title Game title
       @apiSuccess {Number} currentPlayerId Game current player reference id
       @apiSuccess {Number} clueCounter Game clue count
       @apiSuccess {Number} missesRemaining Game misses remaining
@@ -35,6 +41,7 @@ module.exports = (app) => {
         HTTP/1.1 200 OK
         {
           "id": 1,
+          "title": "Flatiron instructors game",
           "currentPlayerId": 1,
           "clueCounter": 8,
           "missesRemaining": 3,
@@ -61,6 +68,7 @@ module.exports = (app) => {
     .post((req, res) => {
       Game
         .create({
+          title: req.body.title,
           currentPlayerId: res.token.id,
           hands: [
             { userId: res.token.id }
