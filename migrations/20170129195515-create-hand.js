@@ -1,32 +1,32 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Hands', {
+    return queryInterface.createTable('hands', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      UserId: {
+      userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Users',
+          model: 'users',
           key: 'id'
         }
       },
-      GameId: {
+      gameId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Games',
+          model: 'games',
           key: 'id'
         }
       },
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Hands');
+    return queryInterface.dropTable('hands');
   }
 };
