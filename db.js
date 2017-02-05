@@ -4,6 +4,10 @@ import Sequelize from 'sequelize';
 
 let db = null;
 
+const capitalize = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 module.exports = (app) => {
   if (!db) {
     const config = app.libs.config;
@@ -22,7 +26,7 @@ module.exports = (app) => {
     fs.readdirSync(dir).forEach(file => {
       const modelDir = path.join(dir, file);
       const model = sequelize.import(modelDir);
-      db.models[model.name] = model;
+      db.models[capitalize(model.name)] = model;
     });
     Object.keys(db.models).forEach(key => {
       db.models[key].associate(db.models);
