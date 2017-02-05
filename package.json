@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "server": "nodemon ./bin/www"
+    "server:dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon ./bin/www",
+    "client": "babel-node startClient.js"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +25,7 @@
     "sequelize-cli": "^2.5.1"
   },
   "devDependencies": {
+    "babel-cli": "^6.22.2",
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
     "concurrently": "^3.1.0",
