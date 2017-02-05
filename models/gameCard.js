@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = (sequelize, DataTypes) => {
 
   const GameCard = sequelize.define('gameCard', {
