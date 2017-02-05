@@ -3,7 +3,7 @@ import jwt from 'jwt-simple';
 
 module.exports = (app) => {
   const User = app.db.models.User;
-  const authenticate = app.auth.authenticate;
+  const authenticate = app.services.auth.passport.authenticate;
   const jwtSecret = app.libs.config.jwtSecret;
 
   app.route("/api/v1/users")
