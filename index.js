@@ -3,8 +3,6 @@ import consign from 'consign';
 
 const app = express();
 
-app.set("json spaces", 4);
-
 consign({ verbose: false /* To disable logs created */})
   .include("libs/config.js")
   .then("db.js")
