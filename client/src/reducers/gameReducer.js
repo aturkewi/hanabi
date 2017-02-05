@@ -12,6 +12,10 @@ export default (state={}, action) => {
         missesRemaining: 3,
         currentPlayerId: 0
       }
+    case "LOAD_GAME":
+      return {
+        
+      }
     case "ADD_PLAYER":
       const newPlayer = { name: action.playerName, hand:[], id: state.players.length }
       return Object.assign({}, state, {

@@ -91,7 +91,8 @@ export default ({ errors, actions }) => {
         </div>
         <input
           type="submit"
-          value="Sign Up" />
+          value="Sign Up" 
+          />
       </form>
     </div>
   )
