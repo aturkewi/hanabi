@@ -47,7 +47,7 @@ module.exports = (app) => {
     */
     .post((req, res) => {
       User
-        .create(req.body)
+        .create(_.pick(req.body, ['firstName', 'lastName', 'username', 'password', 'email']))
         .then(response => {
           const token = jwt.encode({ id: response.id }, jwtSecret);
           const user = _.omit(response, ["dataValues.password"]);
