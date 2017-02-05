@@ -1,9 +1,20 @@
-'use strict';
-
 module.exports = (sequelize, DataTypes) => {
 
-  const Card = sequelize.define('Card', {
-    color: DataTypes.STRING
+  const Card = sequelize.define('card', {
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    color: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    number: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   }, {
     classMethods: {
       associate: function(models) {

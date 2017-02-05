@@ -6,7 +6,7 @@ const login = (req, res, next) => {
   User.findOne({ email: req.body.user.email })
   .then((user) => {
     res.user = user;
-    user.comparePassword(req.body.user.password);
+    user.authenticate(req.body.user.password);
   })
   .then((response) => {
     const { username, email, firstName, lastName } = user;

@@ -25,17 +25,7 @@ npm install
 cd client && npm install
 ```
 
-To run the server, go to the `server/` directory and create a file called `config.js`:
-
-```javascript
-module.exports = {
-  auth: {
-    secret: 'app-secret'
-  }
-}
-```
-
-Then go to the root dir and run `npm run server:dev`.
+Then go to the root dir and run `npm start`.
 
 ## Set up Database and Run migrations
 

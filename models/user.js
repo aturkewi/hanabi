@@ -1,17 +1,46 @@
-'use strict';
-
 const bcrypt = require('bcrypt');
+
+const hashPassword = (password) => {
+  return new Promise((resolve, reject) => {
+    bcrypt.hash(password, 10, (err, hash) => {
+      if (err) return reject(err);
+      resolve(hash);
+    });
+  });
+}
 
 module.exports = (sequelize, DataTypes) => {
 
-  const User = sequelize.define('User', {
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    provider: DataTypes.STRING,
-    providerId: DataTypes.STRING,
+  const User = sequelize.define('user', {
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        notEmpty: true
+      }
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        notEmpty: true
+      }
+    },
     username: {
       type: DataTypes.STRING,
+      unique: {
+        args: true,
+        msg: "Username is already in use!"
+      },
+      allowNull: false,
       validate: {
+        notEmpty: true,
         unique: function(username, next) {
           User.find({ where: {
             username: username
@@ -28,7 +57,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     email: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
+        notEmpty: true,
         isEmail: true,
         unique: function(email, next) {
           User.find({ where: {
@@ -36,28 +67,53 @@ module.exports = (sequelize, DataTypes) => {
           }})
           .then((user) => {
             if (user && this.id !== user.id) {
-              return next('Email already in use!');
+              return next('Email is already in use!');
             }
             return next()
           })
           .catch(err => next(err));
-        }
+        },
+      },
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true
       }
     },
-    password: DataTypes.STRING,
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
   }, {
 
+    hooks: {
+      beforeCreate: user => {
+        return hashPassword(user.password)
+        .then(function(hash) {
+          user.password = hash;
+        });
+      },
+    },
+
     classMethods: {
+
       associate: function(models) {
         const { Hand, Game } = models;
         User.hasMany(Hand)
         User.belongsToMany(Game, { through: Hand });
-        // associations can be defined here
-      }
+      },
+
     },
 
     instanceMethods: {
-      comparePassword: function(password) {
+
+      authenticate: function(password) {
         return new Promise((resolve, reject) => {
           bcrypt.compare(password, this.password)
             .then((response) => {
@@ -72,25 +128,10 @@ module.exports = (sequelize, DataTypes) => {
 
       fullName: function() {
         return `${this.firstName} ${this.lastName}`
-      }
+      },
     },
 
   });
-
-  User.beforeCreate(function(user, options) {
-    return hashPassword(user.password).then(function(hash) {
-      user.password = hash;
-    });
-  });
-
-  const hashPassword = (password) => {
-    return new Promise((resolve, reject) => {
-      bcrypt.hash(password, 10, (err, hash) => {
-        if (err) return reject(err);
-        resolve(hash);
-      });
-    });
-  }
 
   return User;
 };
