@@ -20,17 +20,17 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: function(models) {
-        const { Hand, GameCard, Game } = models;
-        Card.hasMany(GameCard);
-        Card.belongsToMany(Game, {
-          through: GameCard
+        const { hand, gameCard, game } = models;
+        Card.hasMany(gameCard);
+        Card.belongsToMany(game, {
+          through: gameCard
         });
-        Card.belongsToMany(Hand, {
-          through: GameCard
+        Card.belongsToMany(hand, {
+          through: gameCard
         });
       }
     }
   });
 
-  return Cards;
+  return Card;
 };

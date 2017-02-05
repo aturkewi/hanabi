@@ -49,10 +49,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: function(models) {
-        const { Card, Game, Hand } = models;
-        GameCard.belongsTo(Card);
-        GameCard.belongsTo(Game);
-        GameCard.belongsTo(Hand);
+        const { card, game, hand } = models;
+        GameCard.belongsTo(card);
+        GameCard.belongsTo(game);
+        GameCard.belongsTo(hand);
       }
     }
   });

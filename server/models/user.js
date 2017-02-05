@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     password: {
-      type: DataType.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true
@@ -66,18 +66,18 @@ module.exports = (sequelize, DataTypes) => {
         .then(function(hash) {
           user.password = hash;
         });
-      });
-    }
+      },
+    },
 
     classMethods: {
 
       associate: function(models) {
-        const { Hand, Game } = models;
-        User.hasMany(Hand)
-        User.belongsToMany(Game, {
-          through: Hand
+        const { hand, game } = models;
+        User.hasMany(hand)
+        User.belongsToMany(game, {
+          through: hand
         });
-      }
+      },
 
     },
 
@@ -98,7 +98,7 @@ module.exports = (sequelize, DataTypes) => {
 
       fullName: function() {
         return `${this.firstName} ${this.lastName}`
-      }
+      },
     },
 
   });

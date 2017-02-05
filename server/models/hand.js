@@ -29,12 +29,12 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
     classMethods: {
       associate: function(models) {
-        const { User, GameCard, Game, Card } = models;
-        Hand.belongsTo(Game);
-        Hand.belongsTo(User);
-        Hand.hasMany(GameCard);
-        Hand.belongsToMany(Card, {
-          through: GameCard
+        const { user, gameCard, game, card } = models;
+        Hand.belongsTo(game);
+        Hand.belongsTo(user);
+        Hand.hasMany(gameCard);
+        Hand.belongsToMany(card, {
+          through: gameCard
         });
       }
     }
