@@ -4,60 +4,68 @@ const bcrypt = require('bcrypt');
 
 module.exports = (sequelize, DataTypes) => {
 
-  const User = sequelize.define('User', {
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    provider: DataTypes.STRING,
-    providerId: DataTypes.STRING,
+  const User = sequelize.define('user', {
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        notEmpty: true
+      }
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        notEmpty: true
+      }
+    },
     username: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
-        unique: function(username, next) {
-          User.find({ where: {
-            username: username
-          }})
-          .then((user) => {
-            if (user && this.id !== user.id) {
-              return next('Username already in use!');
-            }
-            return next()
-          })
-          .catch(err => next(err));
-        }
+        notEmpty: true,
+        unique: true,
       },
     },
     email: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
         isEmail: true,
-        unique: function(email, next) {
-          User.find({ where: {
-            email: email
-          }})
-          .then((user) => {
-            if (user && this.id !== user.id) {
-              return next('Email already in use!');
-            }
-            return next()
-          })
-          .catch(err => next(err));
-        }
+        unique: true,
+        notEmpty: true,
       }
     },
-    password: DataTypes.STRING,
+    password: {
+      type: DataType.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+    },
   }, {
 
     classMethods: {
+
       associate: function(models) {
         const { Hand, Game } = models;
         User.hasMany(Hand)
-        User.belongsToMany(Game, { through: Hand });
-        // associations can be defined here
+        User.belongsToMany(Game, {
+          through: Hand
+        });
       }
+
     },
 
     instanceMethods: {
-      comparePassword: function(password) {
+
+      authenticate: function(password) {
         return new Promise((resolve, reject) => {
           bcrypt.compare(password, this.password)
             .then((response) => {
