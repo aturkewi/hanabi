@@ -4,9 +4,9 @@ module.exports = (app) => {
   const User = app.db.models.User;
   const authenticate = app.auth.authenticate;
 
-  app.route("/users")
+  app.route("/api/v1/users")
     /**
-      @api {post} /users Register a new user
+      @api {post} /api/v1/users Register a new user
       @apiGroup Users
       @apiParam {String} firstName User first name
       @apiParam {String} lastName User last name
@@ -47,11 +47,11 @@ module.exports = (app) => {
         .catch(err => res.status(412).json({ msg: err.message }));
     });
 
-  app.route("/users/:id")
+  app.route("/api/v1/users/:id")
     .all(authenticate())
     /**
       @api { get } /
-      @api {get} /users/:id Return the authenticated user's data
+      @api {get} /api/v1/users/:id Return the authenticated user's data
       @apiGroup Users
       @apiHeader {String} Authorization Token of authenticated user
       @apiHeaderExample {json} Header
@@ -86,7 +86,7 @@ module.exports = (app) => {
         .catch(err => res.status(412).json({ msg: err.message }));
     })
     /**
-      @api {delete} /users/:id Deletes an authenticated user
+      @api {delete} /api/v1/users/:id Deletes an authenticated user
       @apiGroup Users
       @apiHeader {String} Authorization Token of authenticated user
       @apiHeaderExample {json} Header

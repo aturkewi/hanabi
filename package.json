@@ -11,7 +11,7 @@
     "test": "NODE_ENV=test mocha test/**/*.js"
   },
   "apidoc": {
-    "name": "Node Task API - Documentation",
+    "name": "HANABI API ROUTES - Documentation",
     "template": {
       "forceLanguage": "en"
     }

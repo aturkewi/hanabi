@@ -10,7 +10,7 @@ consign({ verbose: false /* To disable logs created */})
   .then("db.js")
   .then("auth.js")
   .then("libs/middlewares.js")
-  .then("routes")
+  .then("routes/api/v1")
   .then("libs/boot.js")
   .into(app);
 
