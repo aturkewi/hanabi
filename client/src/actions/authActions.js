@@ -1,4 +1,5 @@
 import { createUser } from '../services/userService';
+import { storeToken } from '../services/authService';
 
 export const userSignupSuccess = (profile) => {
   return {
@@ -6,10 +7,6 @@ export const userSignupSuccess = (profile) => {
     isAuthenticated: true,
     profile,
   }
-}
-
-const storeToken = (token) => {
-  localStorage.token = token;
 }
 
 export const updateErrors = (errors) => {
@@ -28,7 +25,7 @@ export const signUp = (user) => {
           return dispatch(updateErrors(errors));
         }
         storeToken(data.token);
-        dispatch(userSignupSuccess(data.profile));
+        dispatch(userSignupSuccess(data.user));
       })
       .catch(err => err);
   }
