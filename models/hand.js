@@ -1,5 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 
+
   const Hand = sequelize.define('hand', {
     id: {
       allowNull: false,
@@ -12,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: function(models) {
         const { User, GameCard, Game, Card } = models;
+
         Hand.belongsTo(Game);
         Hand.belongsTo(User);
         Hand.hasMany(GameCard);
