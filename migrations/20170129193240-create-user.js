@@ -1,7 +1,6 @@
-'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('users', {
+    return queryInterface.createTable('Users', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,31 +9,47 @@ module.exports = {
       },
       firstName: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: true,
+        validate: {
+          notEmpty: true
+        }
       },
       lastName: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: true,
+        validate: {
+          notEmpty: true
+        }
       },
       username: {
         type: Sequelize.STRING,
-        allowNull: false
+        unique: {
+          args: true,
+          msg: "Username is already in use!"
+        },
+        allowNull: false,
+        validate: {
+          notEmpty: true,
+        },
       },
       email: {
         type: Sequelize.STRING,
-        allowNull: false
+        unique: {
+          args: true,
+          msg: "Email is already in use!"
+        },
+        allowNull: false,
+        validate: {
+          notEmpty: true,
+          isEmail: true
+        },
       },
       password: {
         type: Sequelize.STRING,
-        allowNull: false
-      },
-      provider: {
-        type: Sequelize.STRING,
-        allowNull: true
-      },
-      providerId: {
-        type: Sequelize.STRING,
-        allowNull: true
+        allowNull: false,
+        validate: {
+          notEmpty: true
+        }
       },
       createdAt: {
         allowNull: false,
@@ -43,10 +58,10 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('users');
+    return queryInterface.dropTable('Users');
   }
 };
