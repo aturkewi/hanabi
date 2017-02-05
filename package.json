@@ -4,8 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "npm run apidoc && nodemon index.js --exec babel-node",
+    "start": "npm run apidoc && concurrently \"nodemon index.js --exec babel-node\" \"npm run client\"",
     "start:clusters": "npm run apidoc && npm run clusters",
+    "client": "babel-node startClient.js",
     "clusters": "nodemon clusters.js --exec babel-node",
     "apidoc": "apidoc -i routes/ -o public/apidoc",
     "test": "NODE_ENV=test mocha test/**/*.js"
