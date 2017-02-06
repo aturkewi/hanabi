@@ -8,7 +8,7 @@
     "start:clusters": "npm run apidoc && npm run clusters",
     "client": "babel-node startClient.js",
     "clusters": "nodemon clusters.js --exec babel-node",
-    "apidoc": "apidoc -i routes/ -o public/apidoc",
+    "apidoc": "apidoc -i apidocs/ -o public/apidoc",
     "test": "NODE_ENV=test mocha test/**/*.js"
   },
   "apidoc": {
