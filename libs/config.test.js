@@ -2,12 +2,10 @@ module.exports = {
   password: null,
   database: "hanabi_test",
   host: "127.0.0.1",
-  params: {
-    dialect: "postgres",
-    logging: false,
-    define: {
-      underscored: false
-    }
+  dialect: "postgres",
+  logging: false,
+  define: {
+    underscored: false
   },
   jwtSecret: "HANABI_DEVELOPMENT",
   jwtSession: {

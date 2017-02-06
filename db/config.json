@@ -1,35 +1,33 @@
 {
   "development": {
+    "username": null,
     "password": null,
     "database": "hanabi_development",
     "host": "127.0.0.1",
     "dialect": "postgres",
-    "params": {
-      "define": {
-        "underscored": false
-      }
+    "define": {
+      "underscored": false
     }
   },
   "test": {
+    "username": null,
     "password": null,
     "database": "hanabi_test",
     "host": "127.0.0.1",
     "dialect": "postgres",
-    "params": {
-      "define": {
-        "underscored": false
-      }
+    "logging": false,
+    "define": {
+      "underscored": false
     }
   },
   "production": {
+    "username": null,
     "password": null,
     "database": "hanabi_production",
     "host": "127.0.0.1",
     "dialect": "postgres",
-    "params": {
-      "define": {
-        "underscored": false
-      }
+    "define": {
+      "underscored": false
     }
   }
 }

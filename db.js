@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
+const env = process.env.NODE_ENV || 'development';
+const config = require('./db/config.json')[env];
 
 let db = null;
 
@@ -10,12 +12,11 @@ const capitalize = (string) => {
 
 module.exports = (app) => {
   if (!db) {
-    const config = app.libs.config;
     const sequelize = new Sequelize(
       config.database,
       config.username,
       config.password,
-      config.params
+      config
     );
     db = {
       sequelize,

@@ -21,6 +21,56 @@ module.exports = (app) => {
           "title": "Flatiron instructors game"
         }
       @apiSuccess {Number} id Game id
+      @apiSuccessExample {json} Success
+        HTTP/1.1 200 OK
+        {
+          "id": 1,
+        }
+      @apiErrorExample {json} Register error
+        HTTP/1.1 412 Precondition Failed
+    */
+    .post((req, res) => {
+      Game
+        .create({
+          title: req.body.title,
+          currentPlayerId: res.token.id,
+          hands: [
+            { userId: res.token.id }
+          ]
+        }, {
+          include: [ Hand ]
+        })
+        .then(game => Game.findOne({
+          where: {
+            id: game.id
+          },
+          include: [
+            {
+              model: Hand,
+              include: [
+                {
+                  model: User,
+                  attributes: ["username", "email", "firstName", "lastName"]
+                }
+              ]
+            }
+          ]
+        }))
+        .then(game => res.status(200).json(game))
+        .catch(err => res.json(err));
+    })
+
+  app.route('/api/v1/games/:gameId')
+    // .all(authenticate(), currentUser())
+    /**
+      @api {get} /api/v1/games/:gameId Retrieve Game Details
+      @apiGroup Games
+      @apiHeader {String} Authorization Token of authenticated user
+      @apiHeaderExample {json} Header
+        {
+          "Authorization": "JWT xyz.abc.123.hgf"
+        }
+      @apiSuccess {Number} id Game id
       @apiSuccess {String} title Game title
       @apiSuccess {Number} currentPlayerId Game current player reference id
       @apiSuccess {Number} clueCounter Game clue count
@@ -65,34 +115,8 @@ module.exports = (app) => {
       @apiErrorExample {json} Register error
         HTTP/1.1 412 Precondition Failed
     */
-    .post((req, res) => {
+    .get((req, res) => {
       Game
-        .create({
-          title: req.body.title,
-          currentPlayerId: res.token.id,
-          hands: [
-            { userId: res.token.id }
-          ]
-        }, {
-          include: [ Hand ]
-        })
-        .then(game => Game.findOne({
-          where: {
-            id: game.id
-          },
-          include: [
-            {
-              model: Hand,
-              include: [
-                {
-                  model: User,
-                  attributes: ["username", "email", "firstName", "lastName"]
-                }
-              ]
-            }
-          ]
-        }))
-        .then(game => res.status(200).json(game))
-        .catch(err => res.json(err));
+        .findById(req.params.id)
     })
 };
