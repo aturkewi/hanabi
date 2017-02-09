@@ -4,7 +4,7 @@ import NewGame from './NewGame';
 export default (props) => {
   return (
     <div>
-      Games Go Here
+      Games:
       <NewGame createGame={props.actions.createGame} />
     </div>
   )

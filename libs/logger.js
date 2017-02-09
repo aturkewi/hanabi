@@ -12,7 +12,7 @@ module.exports = new winston.Logger({
       filename: "logs/app.log",
       maxsize: 1048576,
       maxFiles: 10,
-      colorize: false
+      colorize: true
     })
   ]
 });
