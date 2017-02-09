@@ -94,10 +94,12 @@ module.exports = (sequelize, DataTypes) => {
 
     hooks: {
       beforeCreate: user => {
-        return hashPassword(user.password)
-        .then(function(hash) {
-          user.password = hash;
-        });
+        const salt = bcrypt.genSaltSync();
+        user.password = bcrypt.hashSync(user.password, salt);
+        // return hashPassword(user.password)
+        // .then(function(hash) {
+        //   user.password = hash;
+        // });
       },
     },
 
@@ -108,23 +110,27 @@ module.exports = (sequelize, DataTypes) => {
         User.hasMany(Hand)
         User.belongsToMany(Game, { through: Hand });
       },
+      
+      authenticate: function(password, hash) {
+        return bcrypt.compareSync(password, hash);
+        // return new Promise((resolve, reject) => {
+        //   console.log('from db: ',this.password);
+        //   console.log('from form: ', password);
+        //   hashPassword(password).then(hash => console.log("hash %s", hash))
+        //   bcrypt.compare(password, this.password)
+        //     .then((response) => {
+        //       if (response === true) {
+        //         resolve(true);
+        //       } else {
+        //         reject('Password is not valid!')
+        //       }
+        //     });
+        // });
+      }
 
     },
 
     instanceMethods: {
-
-      authenticate: function(password) {
-        return new Promise((resolve, reject) => {
-          bcrypt.compare(password, this.password)
-            .then((response) => {
-              if (response === true) {
-                resolve(true);
-              } else {
-                reject(new Error('Password is not valid!'))
-              }
-            });
-        });
-      },
 
       fullName: function() {
         return `${this.firstName} ${this.lastName}`
