@@ -21,23 +21,21 @@ module.exports = (app) => {
 
   app.route("/api/v1/login")
     .post((req, res) => {
-      console.log('the params are', req.body);
-      
       User
         .findOne({ username: req.body.username })
-        .then(user => {
-          if (User.authenticate(req.body.password, user.password)) {
-            res.user = _.omit(res.user, ["dataValues.password"])
-            const token = jwt.encode({ id: res.user.id }, jwtSecret);
-            res.json({ 
-              user: res.user,
+        .then(dbUser => {
+          if (dbUser.authenticate(req.body.password)) {
+            const user = _.omit(dbUser, ["dataValues.password"]);
+            const token = jwt.encode({ id: user.id }, jwtSecret);
+            return res.json({ 
+              user,
               token 
             });
           }
           res.status(412).json({ message: 'Password does not match'});
         })
         .catch(err => res.status(412).json({ message: err }))
-    })
+    });
 
   app.route("/api/v1/users/:id")
     .all(authenticate())
