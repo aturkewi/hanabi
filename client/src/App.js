@@ -4,7 +4,7 @@ import React from 'react';
 import './App.css';
 import './simple-grid.css'
 import { addPlayer, startGame, discardCard, increaseClue, drawCard, nextTurn, playCard, giveClue } from './actions/hanabiActions'
-import { signUp, updateErrors } from './actions/authActions'
+import { signUp, updateErrors, login } from './actions/authActions'
 import { createGame } from './actions/gamesActions'
 
 import NavBar from './components/navigation/Navbar';
@@ -27,6 +27,10 @@ const App = (props) => {
           games: props.games,
           actions: { createGame: props.actions.createGame }
         });
+      case "/login":
+        return React.cloneElement(props.children, {
+          login: props.actions.login
+        })
       default:
         return;
     }
@@ -54,7 +58,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-  return {actions: bindActionCreators({ addPlayer, startGame, discardCard, increaseClue, drawCard, nextTurn, playCard, giveClue, signUp, updateErrors, createGame }, dispatch)};
+  return {actions: bindActionCreators({ addPlayer, startGame, discardCard, increaseClue, drawCard, nextTurn, playCard, giveClue, signUp, login, updateErrors, createGame }, dispatch)};
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

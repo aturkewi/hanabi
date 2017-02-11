@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import jwt from 'jwt-simple';
+import pry from 'pryjs'
 
 module.exports = (app) => {
   const User = app.db.models.User;
@@ -16,6 +17,24 @@ module.exports = (app) => {
           res.json({ user, token });
         })
         .catch(err => res.status(412).json({ msg: err.message }));
+    });
+
+  app.route("/api/v1/login")
+    .post((req, res) => {
+      User
+        .findOne({ username: req.body.username })
+        .then(dbUser => {
+          if (dbUser.authenticate(req.body.password)) {
+            const user = _.omit(dbUser, ["dataValues.password"]);
+            const token = jwt.encode({ id: user.id }, jwtSecret);
+            return res.json({ 
+              user,
+              token 
+            });
+          }
+          res.status(412).json({ errors: ['Password does not match']});
+        })
+        .catch(err => res.status(412).json({ errors: err }))
     });
 
   app.route("/api/v1/users/:id")

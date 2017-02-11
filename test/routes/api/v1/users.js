@@ -14,25 +14,24 @@ describe("Routes: Users", () => {
 
   beforeEach(done => {
     User
-      .create({
-        firstName: "Luke",
-        lastName: "Ghenco",
-        username: "lukeghenco",
-        email: "luke@gmail.com",
-        password: "12345"
-      })
-      .then(user => {
-        testUser = user;
-        token = jwt.encode({ id: user.id }, jwtSecret);
-        done();
-      });
-  });
-
-  afterEach(done => {
-    User
       .destroy({ where: {} })
-      .then(() => done());
-  })
+      .then(() => {
+        User
+          .create({
+            firstName: "Luke",
+            lastName: "Ghenco",
+            username: "lukeghenco",
+            email: "luke@gmail.com",
+            password: "12345"
+          })
+          .then(user => {
+            testUser = user;
+            token = jwt.encode({ id: user.id }, jwtSecret);
+            done();
+          });
+      })
+    
+  });
 
   describe("POST /users", () => {
     describe("status 200", () => {
@@ -52,6 +51,28 @@ describe("Routes: Users", () => {
             expect(res.body.user.lastName).to.eql("Turkewitz");
             expect(res.body.user.username).to.eql("aturkewi");
             expect(res.body.user.email).to.eql("avidor@gmail.com");
+            expect(res.body.token).to.exist;
+            done(err);
+          });
+      });
+    });
+  });
+  
+  describe("POST /login", () => {
+    describe("status 200", () => {
+      it("returns the user object with the token", () => {
+        request
+          .post("/api/v1/login")
+          .send({
+            username: "lukeghenco",
+            password: "12345"
+          })
+          .expect(200)
+          .end((err, res) => {
+            expect(res.body.user.firstName).to.eql("Luke");
+            expect(res.body.user.lastName).to.eql("Ghenco");
+            expect(res.body.user.username).to.eql("lukeghenco");
+            expect(res.body.user.email).to.eql("luke@gmail.com");
             expect(res.body.token).to.exist;
             done(err);
           });

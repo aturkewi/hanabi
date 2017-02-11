@@ -1,13 +1,17 @@
 const bcrypt = require('bcrypt');
 
-const hashPassword = (password) => {
-  return new Promise((resolve, reject) => {
-    bcrypt.hash(password, 10, (err, hash) => {
-      if (err) return reject(err);
-      resolve(hash);
+/*
+  @ NOTE: if you want async hashing
+
+  const hashPassword = (password) => {
+    return new Promise((resolve, reject) => {
+      bcrypt.hash(password, 10, (err, hash) => {
+        if (err) return reject(err);
+        resolve(hash);
+      });
     });
-  });
-}
+  }
+*/
 
 module.exports = (sequelize, DataTypes) => {
 
@@ -94,10 +98,16 @@ module.exports = (sequelize, DataTypes) => {
 
     hooks: {
       beforeCreate: user => {
-        return hashPassword(user.password)
-        .then(function(hash) {
-          user.password = hash;
-        });
+        const salt = bcrypt.genSaltSync();
+        user.password = bcrypt.hashSync(user.password, salt);
+        /* 
+          @ NOTE: if you want hashPassword to be async
+
+          return hashPassword(user.password)
+          .then(function(hash) {
+            user.password = hash;
+          });
+        */
       },
     },
 
@@ -108,27 +118,35 @@ module.exports = (sequelize, DataTypes) => {
         User.hasMany(Hand)
         User.belongsToMany(Game, { through: Hand });
       },
-
+      
     },
 
     instanceMethods: {
 
+      fullName: function() {
+        return `${this.firstName} ${this.lastName}`
+      },
+
       authenticate: function(password) {
-        return new Promise((resolve, reject) => {
+        return bcrypt.compareSync(password, this.password);
+        /* 
+          @NOTE: if you need async hashing
+          return new Promise((resolve, reject) => {
+          console.log('from db: ',this.password);
+          console.log('from form: ', password);
+          hashPassword(password).then(hash => console.log("hash %s", hash))
           bcrypt.compare(password, this.password)
             .then((response) => {
               if (response === true) {
                 resolve(true);
               } else {
-                reject(new Error('Password is not valid!'))
+                reject('Password is not valid!')
               }
             });
-        });
-      },
+          });
+        */
+      }
 
-      fullName: function() {
-        return `${this.firstName} ${this.lastName}`
-      },
     },
 
   });
