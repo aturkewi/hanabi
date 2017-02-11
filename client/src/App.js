@@ -4,11 +4,10 @@ import React from 'react';
 import './App.css';
 import './simple-grid.css'
 import { addPlayer, startGame, discardCard, increaseClue, drawCard, nextTurn, playCard, giveClue } from './actions/hanabiActions'
-import { signUp, updateErrors, login } from './actions/authActions'
-import { createGame } from './actions/gamesActions'
+import { signUp, updateErrors, login } from './actions/authActions';
 
 import NavBar from './components/navigation/Navbar';
-import Home from './components/Home'
+import Home from './components/Home';
 
 const App = (props) => {
 
@@ -17,22 +16,19 @@ const App = (props) => {
       case "/signup":
         return React.cloneElement(props.children, {
           errors: props.auth.errors,
+          router: props.router,
+          profile: props.auth.profile,
           actions: {
             signUp: props.actions.signUp,
             updateErrors: props.actions.updateErrors
           }
-        });
-      case "/games":
-        return React.cloneElement(props.children, {
-          games: props.games,
-          actions: { createGame: props.actions.createGame }
         });
       case "/login":
         return React.cloneElement(props.children, {
           login: props.actions.login
         })
       default:
-        return;
+        return React.cloneElement(props.children);
     }
   };
 
@@ -42,7 +38,12 @@ const App = (props) => {
         <NavBar auth={props.auth} />
         <div>
           {
-            (props.children && byChild()) || <Home />
+            /* 
+              TODO :
+              we should use connect with our SignUp component 
+              to destroy this complex code of byChild() 
+            */
+            (byChild()) || <Home />
           }
         </div>
       </div>
@@ -54,11 +55,25 @@ function mapStateToProps(state){
   return {
     game: state.game,
     auth: state.auth
-  }
-}
+  };
+};
 
 function mapDispatchToProps(dispatch){
-  return {actions: bindActionCreators({ addPlayer, startGame, discardCard, increaseClue, drawCard, nextTurn, playCard, giveClue, signUp, login, updateErrors, createGame }, dispatch)};
-}
+  return {
+    actions: bindActionCreators({ 
+      addPlayer, 
+      startGame, 
+      discardCard, 
+      increaseClue, 
+      drawCard, 
+      nextTurn, 
+      playCard, 
+      giveClue, 
+      signUp, 
+      updateErrors,
+      login,
+    }, dispatch)
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

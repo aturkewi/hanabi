@@ -8,3 +8,7 @@ export const getToken = () => {
   }
   console.warn('no token')
 }
+
+export const isAuthenticated = () => {
+  return !!getToken();
+}

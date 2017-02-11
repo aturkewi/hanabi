@@ -1,5 +1,6 @@
 import React from 'react';
 import NavLink from './NavLink';
+import { isAuthenticated } from '../../services/authService';
 
 export default ({ auth }) => {
   return (
@@ -12,7 +13,7 @@ export default ({ auth }) => {
       </NavLink>
       {
         /* Logged In Routes */
-        auth.isAuthenticated ?
+        isAuthenticated() ?
         
         <div>
           <NavLink to="/games">
