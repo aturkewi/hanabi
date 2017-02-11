@@ -4,10 +4,10 @@ import React from 'react';
 import './App.css';
 import './simple-grid.css'
 import { addPlayer, startGame, discardCard, increaseClue, drawCard, nextTurn, playCard, giveClue } from './actions/hanabiActions'
-import { signUp, updateErrors } from './actions/authActions'
+import { signUp, updateErrors, login } from './actions/authActions';
 
 import NavBar from './components/navigation/Navbar';
-import Home from './components/Home'
+import Home from './components/Home';
 
 const App = (props) => {
 
@@ -23,6 +23,10 @@ const App = (props) => {
             updateErrors: props.actions.updateErrors
           }
         });
+      case "/login":
+        return React.cloneElement(props.children, {
+          login: props.actions.login
+        })
       default:
         return React.cloneElement(props.children);
     }
@@ -66,7 +70,8 @@ function mapDispatchToProps(dispatch){
       playCard, 
       giveClue, 
       signUp, 
-      updateErrors 
+      updateErrors,
+      login,
     }, dispatch)
   };
 };

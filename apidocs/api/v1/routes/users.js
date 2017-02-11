@@ -37,6 +37,38 @@
     HTTP/1.1 412 Precondition Failed
 */
 
+/**
+  @api {post} /api/v1/login Login an existing user
+  @apiGroup Users
+  @apiParam {String} username User username
+  @apiParam {String} password User password
+  @apiParamExample {json} Parameters
+    {
+      "username": "lukeghenco",
+      "password": "123456"
+    }
+  @apiSuccess {Object} user User object
+  @apiSuccess {Number} user.id User id
+  @apiSuccess {String} user.firstName User first name
+  @apiSuccess {String} user.lastName User last name
+  @apiSuccess {String} user.username User username
+  @apiSuccess {String} user.email User email
+  @apiSuccess {String} token User JWT token
+  @apiSuccessExample {json} Success
+    HTTP/1.1 200 OK
+    {
+      "user": {
+        "id": 1,
+        "firstName": "Luke",
+        "lastName": "Ghenco",
+        "username": "lukeghenco"
+        "email": "luke@gmail.com",
+      },
+      "token": "abc.123.def.456"
+    }
+  @apiErrorExample {json} Login error
+    HTTP/1.1 412 User not found or password did not match
+*/
 
 /**
   @api { get } /

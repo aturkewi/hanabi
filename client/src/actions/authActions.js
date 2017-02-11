@@ -1,4 +1,4 @@
-import { createUser } from '../services/userService';
+import { createUser, loginUser } from '../services/userService';
 import { storeToken } from '../services/authService';
 
 export const userSignupSuccess = (profile) => {
@@ -30,3 +30,19 @@ export const signUp = (user) => {
       .catch(err => err);
   }
 };
+
+export const login = (username, password) => {
+  return dispatch => {
+    return loginUser(username, password)
+      .then((data) => {
+        if (data.errors){
+          const errors = data.errors.map(error => error.message);
+          return dispatch(updateErrors(errors));
+        }
+        debugger;
+        storeToken(data.token);
+        dispatch(userSignupSuccess(data.user));
+      })
+      .catch(err => console.log(err));
+  }
+}
