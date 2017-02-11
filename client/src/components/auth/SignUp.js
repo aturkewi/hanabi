@@ -14,6 +14,12 @@ export default class SignUp extends Component {
     }
   }
 
+  componentDidUpdate() {
+    if (isAuthenticated()) {
+      this.props.router.push('/games');
+    }
+  }
+
   handleSubmit(event) {
     event.preventDefault();
 

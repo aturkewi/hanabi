@@ -1,6 +1,7 @@
 export default (state = {
   errors: [],
   profile: {},
+  isAuthenticated: false,
 }, action) => {
   switch(action.type){
     case 'UPDATE_ERRORS':
@@ -8,6 +9,7 @@ export default (state = {
     case 'USER_SIGNUP_SUCCESS':
       return Object.assign({}, state, {
         profile: action.profile,
+        isAuthenticated: true
       });
     default:
       return state

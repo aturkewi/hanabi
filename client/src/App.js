@@ -18,6 +18,7 @@ const App = (props) => {
         return React.cloneElement(props.children, {
           errors: props.auth.errors,
           router: props.router,
+          profile: props.auth.profile,
           actions: {
             signUp: props.actions.signUp,
             updateErrors: props.actions.updateErrors
