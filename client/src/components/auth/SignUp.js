@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { isAuthenticated } from '../../services/authService';
 
-export default ({ errors, actions }) => {
+export default class SignUp extends Component {
 
-  const {
-    signUp,
-    updateErrors,
-  } = actions;
+  constructor(props) {
+    super(props);
+    this.input = {};
+  }
 
-  let input = {};
+  componentWillMount() {
+    if (isAuthenticated()) {
+      this.props.router.push('/games');
+    }
+  }
 
-  const handleSubmit = (event) => {
+  handleSubmit(event) {
     event.preventDefault();
+
+    const { input } = this;
+    const { updateErrors, signUp } = this.props.actions;
 
     let user = {};
     let newErrors = [];
@@ -37,63 +45,67 @@ export default ({ errors, actions }) => {
       return updateErrors(newErrors);
     }
 
-    input = {};
+    this.input = {};
     return signUp(user);
   }
 
-  let errorMessages = errors.map((error, index) => <p key={index} >{error}</p>);
+  render() {
 
-  return(
-    <div>
-      {errorMessages}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="firstName">First Name</label>
+    const errorMessages = this.props.errors.map((error, index) => <p key={index} >{error}</p>);
+
+    return(
+      <div>
+        {errorMessages}
+        <form onSubmit={(event) => this.handleSubmit(event)}>
+          <div>
+            <label htmlFor="firstName">First Name</label>
+            <input
+              ref={node => this.input.firstName = node}
+              type="text"
+            />
+          </div>
+          <div>
+            <label htmlFor="lastName">Last Name</label>
+            <input
+              ref={node => this.input.lastName = node}
+              type="text"
+            />
+          </div>
+          <div>
+            <label htmlFor="username">Username</label>
+            <input
+              ref={node => this.input.username = node}
+              type="text"
+            />
+          </div>
+          <div>
+            <label htmlFor="email">Email</label>
+            <input
+              ref={node => this.input.email = node}
+              type="email"
+            />
+          </div>
+          <div>
+            <label htmlFor="password">Password</label>
+            <input
+              ref={node => this.input.password = node}
+              type="password"
+            />
+          </div>
+          <div>
+            <label htmlFor="passwordConfirmation">Password Confirmation</label>
+            <input
+              ref={node => this.input.passwordConfirmation = node}
+              type="password"
+            />
+          </div>
           <input
-            ref={node => input.firstName = node}
-            type="text"
-          />
-        </div>
-        <div>
-          <label htmlFor="lastName">Last Name</label>
-          <input
-            ref={node => input.lastName = node}
-            type="text"
-          />
-        </div>
-        <div>
-          <label htmlFor="username">Username</label>
-          <input
-            ref={node => input.username = node}
-            type="text"
-          />
-        </div>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            ref={node => input.email = node}
-            type="email"
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            ref={node => input.password = node}
-            type="password"
-          />
-        </div>
-        <div>
-          <label htmlFor="passwordConfirmation">Password Confirmation</label>
-          <input
-            ref={node => input.passwordConfirmation = node}
-            type="password"
-          />
-        </div>
-        <input
-          type="submit"
-          value="Sign Up" 
-          />
-      </form>
-    </div>
-  )
-}
+            type="submit"
+            value="Sign Up" 
+            />
+        </form>
+      </div>
+    );
+  }
+  
+};
