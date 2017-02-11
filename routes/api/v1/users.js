@@ -32,9 +32,9 @@ module.exports = (app) => {
               token 
             });
           }
-          res.status(412).json({ message: 'Password does not match'});
+          res.status(412).json({ errors: ['Password does not match']});
         })
-        .catch(err => res.status(412).json({ message: err }))
+        .catch(err => res.status(412).json({ errors: err }))
     });
 
   app.route("/api/v1/users/:id")

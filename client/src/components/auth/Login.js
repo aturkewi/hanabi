@@ -1,22 +1,28 @@
 import React from 'react';
 
 export default (props) => {
+  console.log('ping')
 
   const { login } = props
 
   let input = {};
 
   const handleSubmit = (event) => {
-    
-  }
+    event.preventDefault();
 
+    let username = input['username'].value.trim();
+    let password = input['password'].value.trim();
+    
+    input={};
+    login(username, password);
+  }
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="userName">User Name</label>
+          <label htmlFor="username">User Name</label>
           <input
-            ref={node => input.userName = node}
+            ref={node => input.username = node}
             type="text"
           />
         </div>

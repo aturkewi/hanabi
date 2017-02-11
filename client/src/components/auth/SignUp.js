@@ -38,7 +38,7 @@ export default ({ errors, actions }) => {
     }
 
     input = {};
-    return signUp(user);
+    signUp(user);
   }
 
   let errorMessages = errors.map((error, index) => <p key={index} >{error}</p>);
