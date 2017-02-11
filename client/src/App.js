@@ -17,6 +17,7 @@ const App = (props) => {
       case "/signup":
         return React.cloneElement(props.children, {
           errors: props.auth.errors,
+          router: props.router,
           actions: {
             signUp: props.actions.signUp,
             updateErrors: props.actions.updateErrors
