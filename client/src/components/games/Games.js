@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import NewGame from './NewGame';
 import { createGame } from '../../actions/gamesActions';
+import { Link } from 'react-router';
 
 class Game extends Component {
   render() {
@@ -12,7 +13,7 @@ class Game extends Component {
         <NewGame createGame={this.props.actions.createGame} />
         <h2>Existing Games</h2>
         <ul>
-          {games.map((game, i) => <li key={i}>{game.title}</li>)}          
+          {games.map((game, i) => <li key={i}><Link to={`/games/${game.id}`}>{game.title}</Link></li>)}          
         </ul>
       </div>
     )
