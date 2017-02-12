@@ -14,3 +14,18 @@ export const createGame = (title) => {
       .catch(err => console.log(err));
   }
 };
+
+const loadGames = (games) => {
+  return {
+    type: "ADD_GAMES",
+    games
+  }
+}
+
+export const getGames = () => {
+  return dispatch => {
+    return gameService.index()
+      .then(data => dispatch(loadGames(data)))
+      .catch(err => console.log(err));
+  }
+}
