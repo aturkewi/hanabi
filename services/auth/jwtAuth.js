@@ -1,4 +1,4 @@
-import jwt from 'jwt-simple';
+import JWT from 'jwt-simple';
 
 module.exports = (app) => {
   const jwtSecret = app.libs.config.jwtSecret;
@@ -6,7 +6,7 @@ module.exports = (app) => {
   return {
     currentUser: (req, res, next) => {
       const token = req.headers.authorization.split(" ")[1];
-      res.token = jwt.decode(token, jwtSecret);
+      res.token = JWT.decode(token, jwtSecret);
       next();
     },
   }

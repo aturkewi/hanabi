@@ -4,7 +4,7 @@ import pry from 'pryjs'
 
 module.exports = (app) => {
   const User = app.db.models.User;
-  const authenticate = app.services.auth.passport.authenticate;
+  const currentUser = app.services.auth.jwtAuth.currentUser;
   const jwtSecret = app.libs.config.jwtSecret;
 
   app.route("/api/v1/users")
@@ -38,7 +38,7 @@ module.exports = (app) => {
     });
 
   app.route("/api/v1/users/:id")
-    .all(authenticate())
+    .all(currentUser)
     .get((req, res) => {
       User
         .findById(req.params.id, {
