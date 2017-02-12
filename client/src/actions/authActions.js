@@ -39,7 +39,6 @@ export const login = (username, password) => {
           const errors = data.errors.map(error => error.message);
           return dispatch(updateErrors(errors));
         }
-        debugger;
         storeToken(data.token);
         dispatch(userSignupSuccess(data.user));
       })
