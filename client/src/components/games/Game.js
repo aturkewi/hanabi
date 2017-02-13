@@ -1,31 +1,33 @@
 import React, { Component } from 'react';
-import GameService from '../../services/gameService';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as gameActions from '../../actions/gameActions';
 
 class Game extends Component {
 
-  constructor() {
-    super();
-
-    this.state = {
-
-    }
-  }
-
   componentWillMount() {
-    GameService
-      .show(this.props.params.gameId)
-      .then((game) => {
-        console.log(game);
-      })
+    this.props.actions.loadGame(this.props.params.gameId);
   }
   
   render() {
     return(
       <div>
-      hi
+        {this.props.game.title}
       </div>
-    )
+    );
   }
-}
+};
 
-export default Game;
+const mapStateToProps = (state) => {
+  return {
+    game: state.currentGame
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(gameActions, dispatch)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
