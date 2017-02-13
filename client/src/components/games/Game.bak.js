@@ -27,7 +27,6 @@ export default (props) => {
   return(
     <div>
       <div className="row">
-        <AddPlayer addPlayer={props.actions.addPlayer} />
         {(players.length > 1) ? <button onClick={props.actions.startGame.bind(null, players, deck)}>Start Game</button> : ''}
       </div>
       <div className="row">

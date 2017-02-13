@@ -6,6 +6,7 @@
   "scripts": {
     "start": "npm run apidoc && concurrently \"nodemon index.js --exec babel-node\" \"npm run client\"",
     "start:clusters": "npm run apidoc && npm run clusters",
+    "server": "nodemon index.js --exec babel-node",
     "client": "babel-node startClient.js",
     "clusters": "nodemon clusters.js --exec babel-node",
     "apidoc": "apidoc -i apidocs/api/v1/routes/ -o public/apidoc",

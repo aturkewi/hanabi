@@ -4,7 +4,7 @@ import auth from './authReducer';
 import games from './gamesReducer';
 
 const rootReducer = combineReducers({ 
-  game,
+  currentGame: game,
   games, 
   auth 
 })

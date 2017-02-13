@@ -2,32 +2,52 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import NewGame from './NewGame';
-import { createGame } from '../../actions/gamesActions';
+import { createGame, loadGames } from '../../actions/gamesActions';
+import { Link } from 'react-router';
 
-class Game extends Component {
+class Games extends Component {
+
+  componentWillMount() {
+    this.props.actions.loadGames();
+  }
 
   render() {
+    const { games, children } = this.props;
     return (
       <div>
-        Games:
-        <NewGame createGame={this.props.actions.createGame} />
+        { 
+          !children ? 
+            <div>
+              <NewGame createGame={this.props.actions.createGame} />
+              <h2>Existing Games</h2>
+              <ul>
+                {games.map((game, i) => <li key={i}><Link to={`/games/${game.id}`}>{game.title}</Link></li>)}          
+              </ul>
+            </div>
+          :
+            <div>
+              {children}
+            </div>
+        }
+        
       </div>
-    )
+    );
   }
-}
+};
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   return {
     games: state.games,
   };
 };
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({ 
       createGame,
+      loadGames,
     }, dispatch)
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Game);
+export default connect(mapStateToProps, mapDispatchToProps)(Games);
