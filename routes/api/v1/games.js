@@ -5,12 +5,12 @@ module.exports = (app) => {
   const currentUser = app.services.auth.jwtAuth.currentUser;
 
   app.route("/api/v1/games")
+    .all(currentUser)
     .get((req, res)=> {
       Game.all()
         .then(games => res.status(200).json(games))
         .catch(err => res.json({message: err}))
     })
-    .all(currentUser)
     .post((req, res) => {
       Game
         .create({
