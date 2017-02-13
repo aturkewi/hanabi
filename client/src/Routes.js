@@ -17,12 +17,3 @@ export default (
     </Route>
   </Route>
 )
-
-/*
-  TODO:
-    Home (default)
-    Signup
-    Login
-    Games
-      Games/:gameId
-*/
