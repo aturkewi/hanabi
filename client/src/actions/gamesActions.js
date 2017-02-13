@@ -1,4 +1,4 @@
-import gameService from '../services/gameService';
+import GameService from '../services/gameService';
 
 const createGameSuccess = (game) => {
   return {
@@ -9,23 +9,23 @@ const createGameSuccess = (game) => {
 
 export const createGame = (title) => {
   return dispatch => {
-    return gameService.create(title)
+    return GameService.create(title)
       .then(data => dispatch(createGameSuccess(data)))
       .catch(err => console.log(err));
   }
 };
 
-const loadGames = (games) => {
+const loadGamesSuccess = (games) => {
   return {
     type: "ADD_GAMES",
     games
   }
 }
 
-export const getGames = () => {
+export const loadGames = () => {
   return dispatch => {
-    return gameService.index()
-      .then(data => dispatch(loadGames(data)))
+    return GameService.index()
+      .then(data => dispatch(loadGamesSuccess(data)))
       .catch(err => console.log(err));
   }
 }
