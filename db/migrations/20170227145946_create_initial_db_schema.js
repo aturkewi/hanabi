@@ -42,11 +42,11 @@ exports.up = (knex, Promise) => {
       
       // Data Columns
       gameCardsTable.enu('location', 
-        ['deck', 'played', 'discarded', 'in_hand']);
+        ['deck', 'played', 'discarded', 'in_hand']).defaultTo('deck');
       gameCardsTable.boolean('display_color').defaultTo(false);
       gameCardsTable.boolean('display_number').defaultTo(false);
-      gameCardsTable.string('color');
-      gameCardsTable.integer('number')
+      gameCardsTable.string('color').notNullable();
+      gameCardsTable.integer('number').notNullable();
     })
 };
 
