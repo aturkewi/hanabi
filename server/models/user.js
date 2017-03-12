@@ -15,6 +15,11 @@ const create = (user_attributes) => {
   return Users().insert(user);
 }
 
+const findBy(user_attributes) => {
+  return Users().where(user_attributes);
+}
+
 module.exports = {
   create,
+  findBy,
 }
