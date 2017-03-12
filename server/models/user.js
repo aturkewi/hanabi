@@ -15,8 +15,38 @@ const create = (user_attributes) => {
   return Users().insert(user);
 }
 
-const findBy(user_attributes) => {
+const findOne = (user_attributes) => {
+  return Users().where(user_attributes).limit(1);
+}
+
+const findBy = (user_attributes) => {
   return Users().where(user_attributes);
+}
+
+// const authenticate = (username, password) =>{
+//   const user = User.findBy({username});
+//   if (user){
+//     return brypt.compare(password, user.password, (err, res) => {
+//       if (res){
+//         return user
+//       }else{
+//         return "Incorrect password"
+//       }
+//     })
+//   }else{
+//     return "User not found"
+//   }
+// }
+
+User.prototype.authenticate = (password) => {
+  const user = this;
+  return brypt.compare(password, user.password, (err, res) => {
+    if (res){
+      return user
+    }else{
+      return "Incorrect password"
+    }
+  })
 }
 
 module.exports = {
