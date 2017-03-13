@@ -1,32 +1,36 @@
 import jwt from 'jwt-simple';
+const User = require('../../../../server/models/user');
+const Game = require('../../../../server/models/game');
 
 describe("Routes: Users", () => {
-  const User = app.db.models.User;
   const jwtSecret = app.libs.config.jwtSecret;
   let token;
   let testUser;
 
   before(done => {
     User
-      .destroy({ where: {} })
+      .where('id', '!=', '0')
+      .destroy()
       .then(() => done());
   })
 
   beforeEach(done => {
     User
-      .destroy({ where: {} })
+      .where('id', '!=', '0')
+      .destroy()
       .then(() => {
         User
-          .create({
-            firstName: "Luke",
-            lastName: "Ghenco",
+          .forge({
+            first_name: "Luke",
+            last_name: "Ghenco",
             username: "lukeghenco",
             email: "luke@gmail.com",
-            password: "12345"
+            password: "password"
           })
+          .save()
           .then(user => {
-            testUser = user;
-            token = jwt.encode({ id: user.id }, jwtSecret);
+            testUser = user.prepUserForAuth()
+            token = jwt.encode({ id: testUser.id }, jwtSecret);
             done();
           });
       })
@@ -39,16 +43,16 @@ describe("Routes: Users", () => {
         request
           .post("/api/v1/users")
           .send({
-            firstName: "Avidor",
-            lastName: "Turkewitz",
+            first_name: "Avidor",
+            last_name: "Turkewitz",
             username: "aturkewi",
             email: "avidor@gmail.com",
             password: "12345"
           })
           .expect(200)
           .end((err, res) => {
-            expect(res.body.user.firstName).to.eql("Avidor");
-            expect(res.body.user.lastName).to.eql("Turkewitz");
+            expect(res.body.user.first_name).to.eql("Avidor");
+            expect(res.body.user.last_name).to.eql("Turkewitz");
             expect(res.body.user.username).to.eql("aturkewi");
             expect(res.body.user.email).to.eql("avidor@gmail.com");
             expect(res.body.token).to.exist;
@@ -69,8 +73,8 @@ describe("Routes: Users", () => {
           })
           .expect(200)
           .end((err, res) => {
-            expect(res.body.user.firstName).to.eql("Luke");
-            expect(res.body.user.lastName).to.eql("Ghenco");
+            expect(res.body.user.first_name).to.eql("Luke");
+            expect(res.body.user.last_name).to.eql("Ghenco");
             expect(res.body.user.username).to.eql("lukeghenco");
             expect(res.body.user.email).to.eql("luke@gmail.com");
             expect(res.body.token).to.exist;
@@ -88,8 +92,8 @@ describe("Routes: Users", () => {
           .set("Authorization", `JWT ${token}`)
           .expect(200)
           .end((err, res) => {
-            expect(res.body.firstName).to.eql("Luke");
-            expect(res.body.lastName).to.eql("Ghenco");
+            expect(res.body.first_name).to.eql("Luke");
+            expect(res.body.last_name).to.eql("Ghenco");
             expect(res.body.username).to.eql("lukeghenco");
             expect(res.body.email).to.eql("luke@gmail.com");
             done(err);

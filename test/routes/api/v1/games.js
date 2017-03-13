@@ -1,41 +1,53 @@
 import jwt from 'jwt-simple';
+const User = require('../../../../server/models/user');
+const Game = require('../../../../server/models/game');
 
 describe("Routes: Games", () => {
-  const { User, Game } = app.db.models;
   const jwtSecret = app.libs.config.jwtSecret;
   let token;
   let testUser;
   let testGame;
 
   before(done => {
+    
     Game
-      .destroy({ where: {} });
+      .where('id', '!=', '0')
+      .destroy()
     User
-      .destroy({ where: {} })
+      .where('id', '!=', '0')
+      .destroy()
       .then(() => done());
   })
 
   beforeEach(done => {
     User
-      .create({
-        firstName: "Luke",
-        lastName: "Ghenco",
-        username: "lukeghenco",
-        email: "luke@gmail.com",
-        password: "12345"
+      .where('id', '!=', '0')
+      .destroy()
+      .then(() => {
+        User
+          .forge({
+            first_name: "Luke",
+            last_name: "Ghenco",
+            username: "lukeghenco",
+            email: "luke@gmail.com",
+            password: "password"
+          })
+          .save()
+          .then(user => {
+            testUser = user.prepUserForAuth()
+            token = jwt.encode({ id: testUser.id }, jwtSecret);
+            done();
+          });
       })
-      .then(user => {
-        testUser = user;
-        token = jwt.encode({ id: user.id }, jwtSecret);
-        done();
-      });
   });
 
   afterEach(done => {
     Game
-      .destroy({ where: {} });
+      .where('id', '!=', '0')
+      .destroy()
     User
-      .destroy({ where: {} })
+      .where('id', '!=', '0')
+      .destroy()
       .then(() => done());
   })
 

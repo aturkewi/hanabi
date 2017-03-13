@@ -1,19 +1,21 @@
 import _ from 'lodash';
 import jwt from 'jwt-simple';
 import pry from 'pryjs'
+const User = require('../../../server/models/user');
+const Game = require('../../../server/models/game');
 
 module.exports = (app) => {
-  const User = app.db.models.User;
   const currentUser = app.services.auth.jwtAuth.currentUser;
   const jwtSecret = app.libs.config.jwtSecret;
 
   app.route("/api/v1/users")
     .post((req, res) => {
       User
-        .create(_.pick(req.body, ['firstName', 'lastName', 'username', 'password', 'email']))
-        .then(response => {
-          const token = jwt.encode({ id: response.id }, jwtSecret);
-          const user = _.omit(response, ["dataValues.password"]);
+        .forge(_.pick(req.body, ['firstName', 'lastName', 'username', 'password', 'email']))
+        .save()
+        .then(user => {
+          user = user.prepUserForAuth()
+          const token = jwt.encode({ id: user.id }, jwtSecret);
           res.json({ user, token });
         })
         .catch(err => res.status(412).json({ msg: err.message }));

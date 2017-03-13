@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import pry from 'pryjs';
+const User = require('../../../server/models/user');
+const Game = require('../../../server/models/game');
 
 module.exports = (app) => {
-  const { sequelize } = app.db;
-  const { User, Game, Hand } = app.db.models;
   const currentUser = app.services.auth.jwtAuth.currentUser;
 
   app.route("/api/v1/games")

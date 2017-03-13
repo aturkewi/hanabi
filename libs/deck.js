@@ -1,6 +1,4 @@
-'use strict';
-
-const deck = [
+module.exports = [
   {color: "Red", number: 1},
   {color: "Red", number: 1},
   {color: "Red", number: 1},
@@ -52,30 +50,3 @@ const deck = [
   {color: "White", number: 4},
   {color: "White", number: 5}
 ]
-
-module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert['Card', deck.map(card => card)], {});
-    /*
-      Add altering commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkInsert('Person', [{
-        name: 'John Doe',
-        isBetaMember: false
-      }], {});
-    */
-  },
-
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete['Card', null, {});
-    /*
-      Add reverting commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkDelete('Person', null, {});
-    */
-  }
-};

@@ -24,7 +24,6 @@ module.exports = (app) => {
   }));
   app.use(compression());
   app.use(bodyParser.json());
-  // app.use(app.services.auth.passport.initialize());
   app.use((req, res, next) => {
     if (req.body) {
       delete req.body.id;
