@@ -5,9 +5,6 @@ module.exports = {
   database: "hanabi_development",
   host: "127.0.0.1",
   dialect: "postgres",
-  // logging: (sql) => {
-  //   logger.info(`[${new Date()}] ${sql}`);
-  // },
   define: {
     underscored: false
   },
